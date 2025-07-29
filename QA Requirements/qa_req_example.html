@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Requirements Tracking Spreadsheet</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            background-color: #e9ecef;
+            border: none;
+            border-right: 1px solid #dee2e6;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .tab:first-child {
+            border-radius: 8px 0 0 0;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+            border-radius: 0 8px 0 0;
+        }
+        
+        .tab.active {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: #d1ecf1;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .level-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 0;
+        }
+        
+        .level-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .level-header p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        th {
+            background-color: #343a40;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th:first-child { width: 25%; }
+        th:nth-child(2) { width: 40%; }
+        th:nth-child(3) { width: 25%; }
+        th:nth-child(4) { width: 10%; }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .category-cell {
+            background-color: #e9ecef;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .reference-link {
+            color: #007bff;
+            text-decoration: none;
+            word-break: break-word;
+        }
+        
+        .reference-link:hover {
+            text-decoration: underline;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .export-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .export-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('trainee-junior')">Trainee → Junior</button>
+            <button class="tab" onclick="showTab('junior-engineer')">Junior → QA Engineer</button>
+            <button class="tab" onclick="showTab('engineer-senior')">QA Engineer → Senior</button>
+            <button class="tab" onclick="showTab('senior-lead')">Senior → Lead</button>
+            <button class="tab" onclick="showTab('lead-advanced')">Lead Advanced</button>
+        </div>
+
+        <!-- Trainee to Junior Tab -->
+        <div id="trainee-junior" class="tab-content active">
+            <div class="level-header">
+                <h2>Level 1: Trainee → Junior QA Engineer</h2>
+                <p>Foundation skills for manual testing and basic QA processes</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-trainee-junior"></div>
+                </div>
+                <div class="progress-text" id="progress-text-trainee-junior">0% Complete (0/35)</div>
+            </div>
+            
+            <button class="export-btn" onclick="exportToCSV('trainee-junior')">Export to CSV</button>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Reference</th>
+                        <th>Complete</th>
+                    </tr>
+                </thead>
+                <tbody id="trainee-junior-body">
+                    <tr><td class="category-cell" rowspan="6">Requirement Analysis</td><td>Analyze simple user story</td><td><a href="https://blog.testlodge.com/writing-test-cases-from-user-stories-acceptance-criteria/" class="reference-link" target="_blank">TestLodge - Writing Test Cases from User Stories (with examples)</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Equivalence partitioning</td><td><a href="https://www.softwaretestinghelp.com/what-is-boundary-value-analysis-and-equivalence-partitioning/" class="reference-link" target="_blank">Software Testing Help - Equivalence Partitioning with Examples</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Boundary value analysis</td><td><a href="https://www.guru99.com/equivalence-partitioning-boundary-value-analysis.html" class="reference-link" target="_blank">Guru99 - Boundary Value Analysis with Step-by-Step Examples</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>State transitioning</td><td><a href="https://www.guru99.com/state-transition-testing.html" class="reference-link" target="_blank">Guru99 - State Transition Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Requirements clarification</td><td><a href="https://www.softwaretestingmaterial.com/requirements-analysis-in-software-testing/" class="reference-link" target="_blank">Software Testing Material - Requirements Analysis</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Acceptance criteria awareness</td><td><a href="https://www.atlassian.com/agile/project-management/user-stories" class="reference-link" target="_blank">Atlassian - User Stories & Acceptance Criteria</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Identify Testable Features</td><td>Functional vs non-functional testing</td><td><a href="https://www.softwaretestinghelp.com/functional-testing-vs-non-functional-testing/" class="reference-link" target="_blank">Software Testing Help - Functional vs Non-Functional</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Exploratory mindset basics</td><td><a href="https://www.ministryoftesting.com/dojo/series/exploratory-testing-foundations" class="reference-link" target="_blank">Ministry of Testing - Exploratory Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Positive vs negative testing</td><td><a href="https://www.softwaretestingclass.com/positive-and-negative-testing/" class="reference-link" target="_blank">Software Testing Class - Positive & Negative Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="5">Test Design</td><td>Write simple tests</td><td><a href="https://www.guru99.com/test-case.html" class="reference-link" target="_blank">Guru99 - How to Write Test Cases with Step-by-Step Examples</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Traceability to requirements</td><td><a href="https://www.softwaretestingmaterial.com/requirements-traceability-matrix/" class="reference-link" target="_blank">Software Testing Material - Traceability Matrix</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Test case structure</td><td><a href="https://www.testrail.com/blog/create-a-test-plan/" class="reference-link" target="_blank">TestRail - How to Create Test Plans (Step-by-step with examples)</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Test data preparation</td><td><a href="https://www.softwaretestinghelp.com/test-data-management/" class="reference-link" target="_blank">Software Testing Help - Test Data Management</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Happy path vs edge cases</td><td><a href="https://blog.testlodge.com/happy-path-testing/" class="reference-link" target="_blank">TestLodge - Happy Path Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="5">Execute Complex Test Cases</td><td>Test environment awareness</td><td><a href="https://www.softwaretestingmaterial.com/test-environment-management/" class="reference-link" target="_blank">Software Testing Material - Test Environment Management</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Test execution flow</td><td><a href="https://www.guru99.com/test-execution.html" class="reference-link" target="_blank">Guru99 - Test Execution Process</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Expected vs actual comparison</td><td><a href="https://www.softwaretestingclass.com/test-result-analysis/" class="reference-link" target="_blank">Software Testing Class - Test Result Analysis</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Regression testing concept</td><td><a href="https://www.softwaretestinghelp.com/regression-testing-tools-and-methods/" class="reference-link" target="_blank">Software Testing Help - Regression Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Basic test data preparation</td><td><a href="https://www.softwaretestingmaterial.com/test-data-generation/" class="reference-link" target="_blank">Software Testing Material - Test Data Generation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="6">Document Found Bugs</td><td>What a bug is</td><td><a href="https://glossary.istqb.org/en/term/bug" class="reference-link" target="_blank">ISTQB Glossary - Bug Definition</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Bug structure & lifecycle</td><td><a href="https://www.guru99.com/defect-life-cycle.html" class="reference-link" target="_blank">Guru99 - Defect Life Cycle</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Bug tracking & reproducibility</td><td><a href="https://www.chiark.greenend.org.uk/~sgtatham/bugs.html" class="reference-link" target="_blank">Simon Tatham - How to Report Bugs Effectively</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Priority vs severity</td><td><a href="https://www.softwaretestinghelp.com/how-to-set-defect-priority-and-severity-with-defect-triage-process/" class="reference-link" target="_blank">Software Testing Help - Priority vs Severity</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Bug types (functional, non-functional)</td><td><a href="https://www.softwaretestingmaterial.com/types-of-software-bugs/" class="reference-link" target="_blank">Software Testing Material - Types of Bugs</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Clarity and neutrality</td><td><a href="https://www.ministryoftesting.com/dojo/lessons/how-to-report-bugs-effectively" class="reference-link" target="_blank">Ministry of Testing - Effective Bug Reporting</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="6">Developer Tools/API Basics</td><td>Purpose of console & network tabs</td><td><a href="https://developers.google.com/web/tools/chrome-devtools/console" class="reference-link" target="_blank">Google Developers - Chrome DevTools Console</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Understand HTTP status codes (200, 400, 401/403, 404, 500)</td><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" class="reference-link" target="_blank">Mozilla MDN - HTTP Status Codes</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Where to look for API issues</td><td><a href="https://www.softwaretestinghelp.com/api-testing-tutorial/" class="reference-link" target="_blank">Software Testing Help - Complete API Testing Tutorial for Beginners</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Request URL analysis - what endpoint was called</td><td><a href="https://learning.postman.com/docs/getting-started/introduction/" class="reference-link" target="_blank">Postman Learning Center - REST API Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Request method understanding (GET, POST, PUT, DELETE)</td><td><a href="https://restapitutorial.com/" class="reference-link" target="_blank">REST API Tutorial - HTTP Methods</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Request payload & response analysis, timing checks</td><td><a href="https://learning.postman.com/docs/getting-started/introduction/" class="reference-link" target="_blank">Postman Learning Center - API Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">Domain Specific Knowledge</td><td>Core logic of the app under test</td><td><a href="https://www.testingxperts.com/blog/importance-of-domain-knowledge-in-software-testing" class="reference-link" target="_blank">TestingXperts - Domain Knowledge in Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Organization/product employee structure</td><td><a href="https://www.ministryoftesting.com/dojo/lessons/understanding-the-business-context" class="reference-link" target="_blank">Ministry of Testing - Business Context</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Database basics (CRUD operations)</td><td><a href="https://www.softwaretestinghelp.com/database-testing/" class="reference-link" target="_blank">Software Testing Help - Database Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                    <tr><td>Testing tools (Jira, Confluence, Qmetry, Postman etc.)</td><td><a href="https://www.atlassian.com/software/jira/guides/testing" class="reference-link" target="_blank">Atlassian - Jira for Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('trainee-junior')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Junior to QA Engineer Tab -->
+        <div id="junior-engineer" class="tab-content">
+            <div class="level-header">
+                <h2>Level 2: Junior → QA Engineer</h2>
+                <p>Advanced testing techniques and specialized testing areas</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-junior-engineer"></div>
+                </div>
+                <div class="progress-text" id="progress-text-junior-engineer">0% Complete (0/20)</div>
+            </div>
+            
+            <button class="export-btn" onclick="exportToCSV('junior-engineer')">Export to CSV</button>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Reference</th>
+                        <th>Complete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="category-cell" rowspan="3">Advanced Test Design</td><td>Decision table testing</td><td><a href="https://www.softwaretestinghelp.com/decision-table-testing/" class="reference-link" target="_blank">Software Testing Help - Decision Table Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Pairwise testing techniques</td><td><a href="https://github.com/Microsoft/pict" class="reference-link" target="_blank">Microsoft PICT - Pairwise Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Use case testing</td><td><a href="https://www.guru99.com/use-case-testing.html" class="reference-link" target="_blank">Guru99 - Use Case Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">API Testing Intermediate</td><td>REST API concepts and principles</td><td><a href="https://restapitutorial.com/" class="reference-link" target="_blank">REST API Tutorial</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>JSON/XML validation techniques</td><td><a href="https://json-schema.org/" class="reference-link" target="_blank">JSON Schema Validation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Authentication testing (Basic, OAuth, JWT)</td><td><a href="https://www.softwaretestinghelp.com/api-authentication-authorization-testing/" class="reference-link" target="_blank">Software Testing Help - API Authentication Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Postman collections & environments</td><td><a href="https://learning.postman.com/docs/collections/collections-overview/" class="reference-link" target="_blank">Postman Learning Center - Collections</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Cross-Platform Testing</td><td>Browser compatibility testing</td><td><a href="https://www.browserstack.com/guide/cross-browser-testing" class="reference-link" target="_blank">BrowserStack - Cross Browser Testing Guide</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Mobile responsive testing</td><td><a href="https://developers.google.com/web/fundamentals/design-and-ux/responsive" class="reference-link" target="_blank">Google Developers - Responsive Design Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Device testing strategies</td><td><a href="https://www.softwaretestinghelp.com/mobile-application-testing/" class="reference-link" target="_blank">Software Testing Help - Mobile Testing Strategy</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">Performance Awareness</td><td>Performance testing basics</td><td><a href="https://www.guru99.com/performance-testing.html" class="reference-link" target="_blank">Guru99 - Performance Testing Tutorial</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Web performance metrics (Core Web Vitals)</td><td><a href="https://web.dev/metrics/" class="reference-link" target="_blank">Web.dev - Web Performance Metrics</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Load testing concepts</td><td><a href="https://www.guru99.com/load-testing-tutorial.html" class="reference-link" target="_blank">Guru99 - Load Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Performance monitoring basics</td><td><a href="https://developers.google.com/web/tools/lighthouse" class="reference-link" target="_blank">Google Lighthouse - Performance Monitoring</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Test Documentation</td><td>Advanced test plan creation</td><td><a href="https://standards.ieee.org/ieee/829/3787/" class="reference-link" target="_blank">IEEE 829 - Test Plan Template</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Test strategy documentation</td><td><a href="https://www.softwaretestingmaterial.com/test-strategy/" class="reference-link" target="_blank">Software Testing Material - Test Strategy</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Defect analysis and reporting</td><td><a href="https://www.softwaretestinghelp.com/defect-analysis/" class="reference-link" target="_blank">Software Testing Help - Defect Analysis</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Process Knowledge</td><td>Agile testing practices</td><td><a href="https://agiletester.ca/" class="reference-link" target="_blank">Agile Testing - Lisa Crispin & Janet Gregory</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Test estimation techniques</td><td><a href="https://www.softwaretestingmaterial.com/test-estimation-techniques/" class="reference-link" target="_blank">Software Testing Material - Test Estimation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                    <tr><td>Risk assessment in testing</td><td><a href="https://www.istqb.org/certifications/advanced-level-test-analyst" class="reference-link" target="_blank">ISTQB Advanced - Risk-Based Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('junior-engineer')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- QA Engineer to Senior Tab -->
+        <div id="engineer-senior" class="tab-content">
+            <div class="level-header">
+                <h2>Level 3: QA Engineer → Senior QA Engineer</h2>
+                <p>Test strategy, specialized testing, and basic automation introduction</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-engineer-senior"></div>
+                </div>
+                <div class="progress-text" id="progress-text-engineer-senior">0% Complete (0/25)</div>
+            </div>
+            
+            <button class="export-btn" onclick="exportToCSV('engineer-senior')">Export to CSV</button>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Reference</th>
+                        <th>Complete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="category-cell" rowspan="3">Advanced Test Plan Creation</td><td>Comprehensive test plan creation</td><td><a href="https://www.testrail.com/blog/create-a-test-plan/" class="reference-link" target="_blank">TestRail - How to Create a Test Plan (Step-by-Step Guide with Examples)</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td class="category-cell" rowspan="3">Test Strategy & Planning</td><td>Risk-based testing implementation</td><td><a href="https://www.guru99.com/risk-based-testing.html" class="reference-link" target="_blank">Guru99 - Risk-Based Testing Tutorial with Examples</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Test estimation and planning</td><td><a href="https://www.softwaretestingmaterial.com/test-estimation-techniques/" class="reference-link" target="_blank">Software Testing Material - Test Estimation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">Specialized Testing Areas</td><td>Security testing fundamentals</td><td><a href="https://owasp.org/www-project-web-security-testing-guide/" class="reference-link" target="_blank">OWASP - Web Security Testing Guide</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Accessibility testing (WCAG compliance)</td><td><a href="https://www.w3.org/WAI/WCAG21/quickref/" class="reference-link" target="_blank">W3C - WCAG 2.1 Guidelines</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Usability testing principles</td><td><a href="https://www.nngroup.com/articles/usability-testing-101/" class="reference-link" target="_blank">Nielsen Norman Group - Usability Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Compatibility testing strategies</td><td><a href="https://www.softwaretestinghelp.com/compatibility-testing/" class="reference-link" target="_blank">Software Testing Help - Compatibility Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">Advanced API & Integration</td><td>Microservices testing concepts</td><td><a href="https://martinfowler.com/articles/microservice-testing/" class="reference-link" target="_blank">Martin Fowler - Testing Microservices</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Contract testing basics</td><td><a href="https://docs.pact.io/" class="reference-link" target="_blank">Pact - Consumer-Driven Contract Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>API performance testing</td><td><a href="https://www.blazemeter.com/blog/api-performance-testing" class="reference-link" target="_blank">BlazeMeter - API Performance Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Integration testing strategies</td><td><a href="https://www.softwaretestinghelp.com/integration-testing/" class="reference-link" target="_blank">Software Testing Help - Integration Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Process Improvement</td><td>Quality metrics definition & analysis</td><td><a href="https://ieeexplore.ieee.org/document/8443503" class="reference-link" target="_blank">IEEE - Software Quality Metrics</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Continuous testing in CI/CD</td><td><a href="https://www.atlassian.com/continuous-delivery/continuous-testing" class="reference-link" target="_blank">Atlassian - Continuous Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Test process optimization</td><td><a href="https://www.softwaretestinghelp.com/continuous-improvement-in-testing/" class="reference-link" target="_blank">Software Testing Help - Continuous Improvement</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">Automation Introduction</td><td>Test automation strategy basics</td><td><a href="https://martinfowler.com/articles/practical-test-pyramid.html" class="reference-link" target="_blank">Martin Fowler - Test Automation Pyramid</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Programming fundamentals (choose one: Java/Python/C#/JavaScript)</td><td><a href="https://javafortesters.com/" class="reference-link" target="_blank">Java for Testers - Alan Richardson</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Basic Selenium WebDriver concepts</td><td><a href="https://selenium-python.readthedocs.io/" class="reference-link" target="_blank">Selenium Documentation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>API automation tool basics (REST Assured/similar)</td><td><a href="https://rest-assured.io/" class="reference-link" target="_blank">REST Assured Documentation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">Leadership Skills</td><td>Mentoring junior team members</td><td><a href="https://www.ministryoftesting.com/dojo/series/coaching-and-mentoring" class="reference-link" target="_blank">Ministry of Testing - Coaching and Mentoring</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Cross-functional collaboration</td><td><a href="https://itrevolution.com/the-devops-handbook/" class="reference-link" target="_blank">DevOps Handbook - Building Quality In</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Stakeholder communication</td><td><a href="https://www.istqb.org/certifications/advanced-level" class="reference-link" target="_blank">ISTQB Advanced - Communication Skills</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Test reporting and metrics presentation</td><td><a href="https://www.softwaretestinghelp.com/test-metrics/" class="reference-link" target="_blank">Software Testing Help - Test Metrics</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Performance Testing</td><td>Performance testing execution (JMeter basics)</td><td><a href="https://jmeter.apache.org/usermanual/" class="reference-link" target="_blank">Apache JMeter User Manual</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Performance monitoring and analysis</td><td><a href="https://www.guru99.com/performance-testing-tools.html" class="reference-link" target="_blank">Guru99 - Performance Testing Tools</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                    <tr><td>Load testing scenario design</td><td><a href="https://www.blazemeter.com/blog/load-testing" class="reference-link" target="_blank">BlazeMeter - Load Testing Guide</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('engineer-senior')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Senior to Lead Tab -->
+        <div id="senior-lead" class="tab-content">
+            <div class="level-header">
+                <h2>Level 4: Senior → Lead QA Engineer</h2>
+                <p>Advanced automation, team leadership, and automation test design</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-senior-lead"></div>
+                </div>
+                <div class="progress-text" id="progress-text-senior-lead">0% Complete (0/22)</div>
+            </div>
+            
+            <button class="export-btn" onclick="exportToCSV('senior-lead')">Export to CSV</button>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Reference</th>
+                        <th>Complete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="category-cell" rowspan="5">Test Automation Design</td><td>Automation framework architecture design</td><td><a href="https://martinfowler.com/articles/practical-test-pyramid.html" class="reference-link" target="_blank">Martin Fowler - Test Automation Pyramid</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Advanced Selenium WebDriver implementation</td><td><a href="https://selenium-python.readthedocs.io/" class="reference-link" target="_blank">Selenium Documentation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Page Object Model implementation</td><td><a href="https://selenium-python.readthedocs.io/page-objects.html" class="reference-link" target="_blank">Selenium - Page Object Pattern</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Data-driven testing frameworks</td><td><a href="https://testng.org/doc/documentation-main.html#parameters-dataproviders" class="reference-link" target="_blank">TestNG - Data Providers</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Cross-browser automation strategies</td><td><a href="https://www.browserstack.com/guide/selenium-grid-tutorial" class="reference-link" target="_blank">BrowserStack - Selenium Grid</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">API Automation Frameworks</td><td>Advanced REST Assured/API framework development</td><td><a href="https://rest-assured.io/" class="reference-link" target="_blank">REST Assured Documentation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>API test data management</td><td><a href="https://learning.postman.com/docs/writing-scripts/test-scripts/" class="reference-link" target="_blank">Postman - Test Scripts and Data Management</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>API contract testing implementation</td><td><a href="https://docs.pact.io/" class="reference-link" target="_blank">Pact - Contract Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>API performance automation</td><td><a href="https://www.blazemeter.com/blog/api-performance-testing" class="reference-link" target="_blank">BlazeMeter - API Performance Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">CI/CD Integration</td><td>Jenkins pipeline integration</td><td><a href="https://www.jenkins.io/doc/book/pipeline/" class="reference-link" target="_blank">Jenkins - Pipeline Documentation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Docker for testing environments</td><td><a href="https://www.testcontainers.org/" class="reference-link" target="_blank">TestContainers - Docker for Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Parallel test execution strategies</td><td><a href="https://selenium-python.readthedocs.io/api.html#module-selenium.webdriver.common.desired_capabilities" class="reference-link" target="_blank">Selenium Grid - Parallel Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Test reporting and analytics automation</td><td><a href="https://www.extentreports.com/" class="reference-link" target="_blank">Extent Reports - Test Reporting</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Performance Testing Automation</td><td>Advanced JMeter automation</td><td><a href="https://jmeter.apache.org/usermanual/" class="reference-link" target="_blank">Apache JMeter User Manual</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Performance testing in CI/CD</td><td><a href="https://www.blazemeter.com/blog/continuous-performance-testing" class="reference-link" target="_blank">BlazeMeter - Continuous Performance Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Performance monitoring and alerting</td><td><a href="https://www.datadoghq.com/blog/monitoring-101-collecting-data/" class="reference-link" target="_blank">DataDog - Performance Monitoring</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Team Leadership</td><td>QA team management and development</td><td><a href="https://managinghumans.com/" class="reference-link" target="_blank">Managing Humans - Michael Lopp</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Cross-functional project leadership</td><td><a href="https://www.thoughtworks.com/insights/articles/technical-leadership" class="reference-link" target="_blank">Thoughtworks - Technical Leadership</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Knowledge transfer and training programs</td><td><a href="https://www.ministryoftesting.com/dojo/series/coaching-and-mentoring" class="reference-link" target="_blank">Ministry of Testing - Coaching and Mentoring</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Strategic Planning</td><td>Test automation ROI analysis</td><td><a href="https://www.capgemini.com/insights/research-library/world-quality-report-2023-24/" class="reference-link" target="_blank">Capgemini - World Quality Report</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Tool evaluation and selection</td><td><a href="https://www.ministryoftesting.com/dojo/lessons/tool-selection-criteria" class="reference-link" target="_blank">Ministry of Testing - Tool Selection</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                    <tr><td>Quality strategy development</td><td><a href="https://www.thoughtworks.com/insights/articles/quality-assurance-strategy" class="reference-link" target="_blank">Thoughtworks - Quality Assurance Strategy</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('senior-lead')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Lead Advanced Tab -->
+        <div id="lead-advanced" class="tab-content">
+            <div class="level-header">
+                <h2>Level 5: Lead QA Engineer - Advanced</h2>
+                <p>Strategic leadership, enterprise automation architecture, and organizational influence</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-lead-advanced"></div>
+                </div>
+                <div class="progress-text" id="progress-text-lead-advanced">0% Complete (0/18)</div>
+            </div>
+            
+            <button class="export-btn" onclick="exportToCSV('lead-advanced')">Export to CSV</button>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Reference</th>
+                        <th>Complete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="category-cell" rowspan="4">Strategic Leadership</td><td>Organization-wide QA strategy development</td><td><a href="https://www.thoughtworks.com/insights/articles/quality-assurance-strategy" class="reference-link" target="_blank">Thoughtworks - Quality Assurance Strategy</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Executive-level quality reporting</td><td><a href="https://www.istqb.org/certifications/advanced-level" class="reference-link" target="_blank">ISTQB Advanced - Communicating Quality</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Quality transformation initiatives</td><td><a href="https://itrevolution.com/the-devops-handbook/" class="reference-link" target="_blank">DevOps Handbook - Quality Transformation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Budget planning and resource allocation</td><td><a href="https://rbcs-us.com/" class="reference-link" target="_blank">Rex Black - Test Management</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="4">Advanced Automation Architecture</td><td>Enterprise test automation architecture</td><td><a href="https://www.thoughtworks.com/insights/articles/test-automation-architecture" class="reference-link" target="_blank">Thoughtworks - Test Automation Architecture</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Custom framework and library development</td><td><a href="https://testing.googleblog.com/" class="reference-link" target="_blank">Google Testing Blog - Framework Development</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Multi-platform automation strategies</td><td><a href="https://appium.io/docs/en/about-appium/intro/" class="reference-link" target="_blank">Appium - Cross-Platform Mobile Automation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Automation maintenance and scaling strategies</td><td><a href="https://martinfowler.com/articles/practical-test-pyramid.html" class="reference-link" target="_blank">Martin Fowler - Scaling Test Automation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Cloud & Modern Technologies</td><td>Cloud-native testing strategies</td><td><a href="https://aws.amazon.com/getting-started/hands-on/test-web-app/" class="reference-link" target="_blank">AWS - Cloud Testing Guide</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Kubernetes and containerized testing</td><td><a href="https://www.cncf.io/blog/2020/07/15/testing-in-kubernetes/" class="reference-link" target="_blank">CNCF - Testing in Kubernetes</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Microservices testing at scale</td><td><a href="https://martinfowler.com/articles/microservice-testing/" class="reference-link" target="_blank">Martin Fowler - Microservices Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="3">Business & Communication</td><td>Quality metrics and ROI demonstration</td><td><a href="https://www.capgemini.com/insights/research-library/world-quality-report-2023-24/" class="reference-link" target="_blank">Capgemini - World Quality Report ROI</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Stakeholder influence and change management</td><td><a href="https://www.ministryoftesting.com/dojo/lessons/leading-change-in-testing" class="reference-link" target="_blank">Ministry of Testing - Leading Change</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Industry thought leadership and knowledge sharing</td><td><a href="https://www.ministryoftesting.com/dojo/lessons/building-your-testing-career" class="reference-link" target="_blank">Ministry of Testing - Building Career</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="2">Innovation & Research</td><td>Emerging technology evaluation (AI/ML in testing)</td><td><a href="https://www.ministryoftesting.com/dojo/series/artificial-intelligence-in-testing" class="reference-link" target="_blank">Ministry of Testing - AI in Testing</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Testing research and proof of concepts</td><td><a href="https://testing.googleblog.com/" class="reference-link" target="_blank">Google Testing Blog - Research</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    
+                    <tr><td class="category-cell" rowspan="2">Organizational Impact</td><td>Quality culture transformation</td><td><a href="https://itrevolution.com/the-devops-handbook/" class="reference-link" target="_blank">DevOps Handbook - Culture Transformation</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                    <tr><td>Cross-industry knowledge and best practices</td><td><a href="https://www.capgemini.com/insights/research-library/world-quality-report-2023-24/" class="reference-link" target="_blank">Capgemini - Industry Best Practices</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('lead-advanced')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Update progress for the current tab
+            updateProgress(tabId);
+        }
+        
+        function updateProgress(tabId) {
+            const tab = document.getElementById(tabId);
+            const checkboxes = tab.querySelectorAll('input[type="checkbox"]');
+            const checkedBoxes = tab.querySelectorAll('input[type="checkbox"]:checked');
+            
+            const total = checkboxes.length;
+            const completed = checkedBoxes.length;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            const progressFill = document.getElementById(`progress-${tabId}`);
+            const progressText = document.getElementById(`progress-text-${tabId}`);
+            
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+            }
+            
+            if (progressText) {
+                progressText.textContent = `${percentage}% Complete (${completed}/${total})`;
+            }
+        }
+        
+        function exportToCSV(tabId) {
+            const tab = document.getElementById(tabId);
+            const table = tab.querySelector('table');
+            let csv = 'Category,Description,Reference,Complete\n';
+            
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 4) {
+                    const category = cells[0].textContent.trim();
+                    const description = cells[1].textContent.trim();
+                    const reference = cells[2].querySelector('a') ? cells[2].querySelector('a').href : '';
+                    const complete = cells[3].querySelector('input').checked ? 'Yes' : 'No';
+                    
+                    csv += `"${category}","${description}","${reference}","${complete}"\n`;
+                }
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `qa-requirements-${tabId}.csv`);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        
+        // Initialize progress bars on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabIds = ['trainee-junior', 'junior-engineer', 'engineer-senior', 'senior-lead', 'lead-advanced'];
+            tabIds.forEach(tabId => updateProgress(tabId));
+        });
+    </script>
+</body>
+</html>

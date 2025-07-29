@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Українська Система Вимог для QA Інженерів</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0057b7 0%, #ffd700 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            background-color: #e9ecef;
+            border: none;
+            border-right: 1px solid #dee2e6;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        .tab.active {
+            background-color: #0057b7;
+            color: white;
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: #d1ecf1;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .level-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 20px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 0;
+        }
+        
+        .level-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .level-header p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            margin-top: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        th {
+            background-color: #343a40;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th:first-child { width: 25%; }
+        th:nth-child(2) { width: 40%; }
+        th:nth-child(3) { width: 25%; }
+        th:nth-child(4) { width: 10%; }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .category-cell {
+            background-color: #e9ecef;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .reference-link {
+            color: #0057b7;
+            text-decoration: none;
+            word-break: break-word;
+        }
+        
+        .reference-link:hover {
+            text-decoration: underline;
+        }
+        
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .export-btn {
+            background-color: #0057b7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px 10px 0;
+            font-size: 14px;
+        }
+        
+        .export-btn:hover {
+            background-color: #004494;
+        }
+        
+        .actions {
+            margin-bottom: 20px;
+        }
+        
+        .ua-flag {
+            display: inline-block;
+            width: 20px;
+            height: 15px;
+            background: linear-gradient(to bottom, #0057b7 50%, #ffd700 50%);
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="ua-flag"></span>Українська Система Вимог для QA Інженерів</h1>
+            <p>Комплексний розвиток навичок від стажера до головного QA інженера</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('level1')">Рівень 1: Стажер → Молодший</button>
+            <button class="tab" onclick="showTab('level2')">Рівень 2: Молодший → QA Інженер</button>
+            <button class="tab" onclick="showTab('level3')">Рівень 3: QA Інженер → Старший</button>
+            <button class="tab" onclick="showTab('level4')">Рівень 4: Старший → Лід</button>
+            <button class="tab" onclick="showTab('level5')">Рівень 5: Лід → Головний</button>
+        </div>
+
+        <!-- Рівень 1: Стажер → Молодший QA Інженер -->
+        <div id="level1" class="tab-content active">
+            <div class="level-header">
+                <h2>Рівень 1: Стажер → Молодший QA Інженер</h2>
+                <p>Основи мануального тестування та базові QA процеси (30-35 вимог)</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-level1"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text-level1">0% Завершено (0/35)</div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="export-btn" onclick="exportToCSV('level1')">Експорт в CSV</button>
+                <button class="export-btn" onclick="exportToJSON('level1')">Експорт в JSON</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Категорія</th>
+                        <th>Опис навички</th>
+                        <th>Навчальні ресурси</th>
+                        <th>Завершено</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Аналіз вимог -->
+                    <tr><td class="category-cell" rowspan="6">Аналіз вимог</td><td>Аналізувати прості користувацькі історії та ідентифікувати критерії прийняття</td><td><a href="https://dou.ua/lenta/articles/how-to-write-user-stories/" class="reference-link" target="_blank">DOU - Як писати користувацькі історії</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Створювати базову матрицю відстеження вимог</td><td><a href="https://qalight.ua/baza-znaniy/traceability-matrix/" class="reference-link" target="_blank">QALight - Матриця відстеження</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Перевіряти повноту і тестованість критеріїв прийняття</td><td><a href="https://testit.software/blog/acceptance-criteria/" class="reference-link" target="_blank">TestIT - Критерії прийняття</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Застосовувати техніку класів еквівалентності</td><td><a href="https://qalight.ua/baza-znaniy/equivalence-partitioning/" class="reference-link" target="_blank">QALight - Класи еквівалентності</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Застосовувати техніку аналізу граничних значень</td><td><a href="https://testit.software/blog/boundary-value-analysis/" class="reference-link" target="_blank">TestIT - Аналіз граничних значень</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розуміти основи тестування переходів станів</td><td><a href="https://qalight.ua/baza-znaniy/state-transition-testing/" class="reference-link" target="_blank">QALight - Тестування переходів станів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    
+                    <!-- Ідентифікація тестованих функцій -->
+                    <tr><td class="category-cell" rowspan="3">Ідентифікація тестованих функцій</td><td>Розрізняти функціональні та нефункціональні вимоги тестування</td><td><a href="https://dou.ua/lenta/articles/functional-vs-non-functional-testing/" class="reference-link" target="_blank">DOU - Функціональне vs нефункціональне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розвивати мислення дослідницького тестування</td><td><a href="https://testit.software/blog/exploratory-testing/" class="reference-link" target="_blank">TestIT - Дослідницьке тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розробляти позитивні та негативні тестові сценарії</td><td><a href="https://qalight.ua/baza-znaniy/positive-negative-testing/" class="reference-link" target="_blank">QALight - Позитивне і негативне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    
+                    <!-- Дизайн тестів -->
+                    <tr><td class="category-cell" rowspan="5">Дизайн тестів</td><td>Писати чіткі тест-кейси з передумовами, кроками та очікуваними результатами</td><td><a href="https://dou.ua/lenta/articles/how-to-write-test-cases/" class="reference-link" target="_blank">DOU - Як писати тест-кейси</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Встановлювати відстеження між вимогами та тест-кейсами</td><td><a href="https://testit.software/blog/requirements-traceability/" class="reference-link" target="_blank">TestIT - Відстеження вимог</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Створювати та управляти відповідними наборами тестових даних</td><td><a href="https://qalight.ua/baza-znaniy/test-data-management/" class="reference-link" target="_blank">QALight - Управління тестовими даними</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розробляти сценарії основного потоку (happy path)</td><td><a href="https://testit.software/blog/happy-path-testing/" class="reference-link" target="_blank">TestIT - Тестування основного потоку</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Ідентифікувати та тестувати крайні випадки та граничні умови</td><td><a href="https://dou.ua/lenta/articles/edge-cases-testing/" class="reference-link" target="_blank">DOU - Тестування крайніх випадків</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    
+                    <!-- Виконання складних тест-кейсів -->
+                    <tr><td class="category-cell" rowspan="5">Виконання складних тест-кейсів</td><td>Розуміти та налаштовувати конфігурації тестового середовища</td><td><a href="https://qalight.ua/baza-znaniy/test-environment-setup/" class="reference-link" target="_blank">QALight - Налаштування тестового середовища</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Виконувати тест-кейси систематично та точно документувати результати</td><td><a href="https://testit.software/blog/test-execution-process/" class="reference-link" target="_blank">TestIT - Процес виконання тестів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Порівнювати очікувані та фактичні результати, документувати відхилення</td><td><a href="https://dou.ua/lenta/articles/test-result-analysis/" class="reference-link" target="_blank">DOU - Аналіз результатів тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розуміти концепції регресійного тестування та коли його застосовувати</td><td><a href="https://qalight.ua/baza-znaniy/regression-testing/" class="reference-link" target="_blank">QALight - Регресійне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Готувати та підтримувати тестові дані для різних сценаріїв</td><td><a href="https://testit.software/blog/test-data-preparation/" class="reference-link" target="_blank">TestIT - Підготовка тестових даних</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    
+                    <!-- Управління дефектами -->
+                    <tr><td class="category-cell" rowspan="6">Управління дефектами</td><td>Ідентифікувати різні типи дефектів програмного забезпечення під час тестування</td><td><a href="https://dou.ua/lenta/articles/types-of-bugs/" class="reference-link" target="_blank">DOU - Типи багів в програмному забезпеченні</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Писати чіткі, детальні та відтворювані звіти про баги</td><td><a href="https://qalight.ua/baza-znaniy/how-to-write-bug-reports/" class="reference-link" target="_blank">QALight - Як писати звіти про баги</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розуміти повний життєвий цикл багу та переходи станів</td><td><a href="https://testit.software/blog/bug-life-cycle/" class="reference-link" target="_blank">TestIT - Життєвий цикл багу</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розрізняти пріоритет та серйозність багів</td><td><a href="https://dou.ua/lenta/articles/bug-priority-vs-severity/" class="reference-link" target="_blank">DOU - Пріоритет vs серйозність багів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Відстежувати баги через їх життєвий цикл та забезпečuvати відтворюваність</td><td><a href="https://qalight.ua/baza-znaniy/bug-tracking/" class="reference-link" target="_blank">QALight - Відстеження багів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Підтримувати ясність та нейтральність в комунікації дефектів</td><td><a href="https://testit.software/blog/effective-bug-communication/" class="reference-link" target="_blank">TestIT - Ефективна комунікація багів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    
+                    <!-- API та технічне тестування -->
+                    <tr><td class="category-cell" rowspan="6">API та технічне тестування</td><td>Розуміти HTTP методи (GET, POST, PUT, DELETE) та їх використання</td><td><a href="https://dou.ua/lenta/articles/rest-api-tutorial/" class="reference-link" target="_blank">DOU - REST API для початківців</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Ідентифікувати та інтерпретувати HTTP статус коди (200, 400, 401, 403, 404, 500)</td><td><a href="https://qalight.ua/baza-znaniy/http-status-codes/" class="reference-link" target="_blank">QALight - HTTP статус коди</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Використовувати інструменти розробника браузера для налагодження та аналізу</td><td><a href="https://testit.software/blog/browser-dev-tools/" class="reference-link" target="_blank">TestIT - Інструменти розробника браузера</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Аналізувати API запити та відповіді за допомогою вкладки мережі</td><td><a href="https://dou.ua/lenta/articles/api-testing-basics/" class="reference-link" target="_blank">DOU - Основи API тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розуміти структуру корисного навантаження запиту та аналіз відповіді</td><td><a href="https://qalight.ua/baza-znaniy/api-request-response/" class="reference-link" target="_blank">QALight - API запити та відповіді</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Виконувати базові перевірки часу та продуктивності API викликів</td><td><a href="https://testit.software/blog/api-performance-basics/" class="reference-link" target="_blank">TestIT - Основи продуктивності API</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    
+                    <!-- Доменні знання -->
+                    <tr><td class="category-cell" rowspan="4">Доменні знання</td><td>Розуміти основну бізнес-логіку тестованого додатку</td><td><a href="https://dou.ua/lenta/articles/domain-knowledge-in-testing/" class="reference-link" target="_blank">DOU - Доменні знання в тестуванні</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Вивчити організаційну структуру та динаміку продуктової команди</td><td><a href="https://qalight.ua/baza-znaniy/understanding-business-context/" class="reference-link" target="_blank">QALight - Розуміння бізнес-контексту</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Розуміти основні концепції бази даних та CRUD операції</td><td><a href="https://testit.software/blog/database-testing-basics/" class="reference-link" target="_blank">TestIT - Основи тестування баз даних</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                    <tr><td>Стати досвідченим з основними інструментами тестування (Jira, Confluence, Postman)</td><td><a href="https://dou.ua/lenta/articles/testing-tools-overview/" class="reference-link" target="_blank">DOU - Огляд інструментів тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level1')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Рівень 2: Молодший → QA Інженер -->
+        <div id="level2" class="tab-content">
+            <div class="level-header">
+                <h2>Рівень 2: Молодший QA Інженер → QA Інженер</h2>
+                <p>Передові техніки тестування та спеціалізовані області тестування (15-20 вимог)</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-level2"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text-level2">0% Завершено (0/18)</div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="export-btn" onclick="exportToCSV('level2')">Експорт в CSV</button>
+                <button class="export-btn" onclick="exportToJSON('level2')">Експорт в JSON</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Категорія</th>
+                        <th>Опис навички</th>
+                        <th>Навчальні ресурси</th>
+                        <th>Завершено</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Розширений аналіз вимог -->
+                    <tr><td class="category-cell" rowspan="3">Розширений аналіз вимог</td><td>Аналізувати складні користувацькі історії з множинними критеріями прийняття</td><td><a href="https://dou.ua/lenta/articles/complex-user-stories-analysis/" class="reference-link" target="_blank">DOU - Аналіз складних користувацьких історій</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Ідентифікувати прогалини та неоднозначності в документації вимог</td><td><a href="https://qalight.ua/baza-znaniy/requirements-review/" class="reference-link" target="_blank">QALight - Огляд вимог</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Оцінювати вплив змін вимог на стратегію тестування</td><td><a href="https://testit.software/blog/change-impact-analysis/" class="reference-link" target="_blank">TestIT - Аналіз впливу змін</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    
+                    <!-- Розширений дизайн тестів -->
+                    <tr><td class="category-cell" rowspan="4">Розширений дизайн тестів</td><td>Застосовувати техніку таблиць рішень</td><td><a href="https://dou.ua/lenta/articles/decision-table-testing/" class="reference-link" target="_blank">DOU - Тестування з таблицями рішень</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Впроваджувати парне тестування для складних комбінацій</td><td><a href="https://qalight.ua/baza-znaniy/pairwise-testing/" class="reference-link" target="_blank">QALight - Парне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Розробляти всебічні негативні тестові сценарії</td><td><a href="https://testit.software/blog/advanced-negative-testing/" class="reference-link" target="_blank">TestIT - Розширене негативне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Розробляти тестові стратегії для функціональних модулів</td><td><a href="https://dou.ua/lenta/articles/test-strategy-development/" class="reference-link" target="_blank">DOU - Розробка тестової стратегії</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    
+                    <!-- Кросплатформне тестування -->
+                    <tr><td class="category-cell" rowspan="3">Кросплатформне тестування</td><td>Виконувати тестування сумісності між браузерами</td><td><a href="https://qalight.ua/baza-znaniy/cross-browser-testing/" class="reference-link" target="_blank">QALight - Кросбраузерне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Проводити адаптивне тестування на мобільних пристроях</td><td><a href="https://testit.software/blog/mobile-responsive-testing/" class="reference-link" target="_blank">TestIT - Адаптивне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Розробляти стратегії тестування пристроїв</td><td><a href="https://dou.ua/lenta/articles/mobile-testing-strategy/" class="reference-link" target="_blank">DOU - Стратегія мобільного тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    
+                    <!-- Розширене API та технічне тестування -->
+                    <tr><td class="category-cell" rowspan="4">Розширене API та технічне тестування</td><td>Проводити всебічне API тестування за допомогою Postman</td><td><a href="https://dou.ua/lenta/articles/postman-comprehensive-guide/" class="reference-link" target="_blank">DOU - Повний посібник з Postman</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Валідувати формати відповідей JSON/XML та структуру даних</td><td><a href="https://qalight.ua/baza-znaniy/json-xml-validation/" class="reference-link" target="_blank">QALight - Валідація JSON/XML</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Тестувати методи автентифікації API (Basic, OAuth, JWT)</td><td><a href="https://testit.software/blog/api-authentication-testing/" class="reference-link" target="_blank">TestIT - Тестування автентифікації API</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Проводити базове тестування бази даних та SQL валідацію</td><td><a href="https://dou.ua/lenta/articles/database-testing-advanced/" class="reference-link" target="_blank">DOU - Розширене тестування баз даних</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    
+                    <!-- Обізнаність з продуктивністю -->
+                    <tr><td class="category-cell" rowspan="3">Обізнаність з продуктивністю</td><td>Розуміти основні концепції та метрики тестування продуктивності</td><td><a href="https://qalight.ua/baza-znaniy/performance-testing-basics/" class="reference-link" target="_blank">QALight - Основи тестування продуктивності</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Моніторити та аналізувати метрики веб-продуктивності</td><td><a href="https://testit.software/blog/web-performance-metrics/" class="reference-link" target="_blank">TestIT - Метрики веб-продуктивності</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    <tr><td>Розуміти концепції навантажувального тестування та коли їх застосовувати</td><td><a href="https://dou.ua/lenta/articles/load-testing-guide/" class="reference-link" target="_blank">DOU - Посібник з навантажувального тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                    
+                    <!-- Знання процесів -->
+                    <tr><td class="category-cell" rowspan="1">Знання процесів</td><td>Застосовувати практики agile тестування та техніки оцінки</td><td><a href="https://qalight.ua/baza-znaniy/agile-testing-practices/" class="reference-link" target="_blank">QALight - Практики agile тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level2')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Рівень 3: QA Інженер → Старший QA Інженер -->
+        <div id="level3" class="tab-content">
+            <div class="level-header">
+                <h2>Рівень 3: QA Інженер → Старший QA Інженер</h2>
+                <p>Тестова стратегія, спеціалізоване тестування та знайомство з автоматизацією (20-25 вимог)</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-level3"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text-level3">0% Завершено (0/22)</div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="export-btn" onclick="exportToCSV('level3')">Експорт в CSV</button>
+                <button class="export-btn" onclick="exportToJSON('level3')">Експорт в JSON</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Категорія</th>
+                        <th>Опис навички</th>
+                        <th>Навчальні ресурси</th>
+                        <th>Завершено</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Стратегічне планування тестів -->
+                    <tr><td class="category-cell" rowspan="3">Стратегічне планування тестів</td><td>Проектувати тестову архітектуру для складних додатків</td><td><a href="https://dou.ua/lenta/articles/test-architecture-design/" class="reference-link" target="_blank">DOU - Проектування тестової архітектури</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Впроваджувати стратегії ризик-орієнтованого тестування</td><td><a href="https://qalight.ua/baza-znaniy/risk-based-testing/" class="reference-link" target="_blank">QALight - Ризик-орієнтоване тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Керувати сесіями валідації та огляду вимог</td><td><a href="https://testit.software/blog/requirements-validation/" class="reference-link" target="_blank">TestIT - Валідація вимог</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    
+                    <!-- Спеціалізовані області тестування -->
+                    <tr><td class="category-cell" rowspan="4">Спеціалізовані області тестування</td><td>Проводити основи тестування безпеки та відповідність OWASP</td><td><a href="https://dou.ua/lenta/articles/security-testing-fundamentals/" class="reference-link" target="_blank">DOU - Основи тестування безпеки</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Проводити тестування доступності для відповідності WCAG</td><td><a href="https://qalight.ua/baza-znaniy/accessibility-testing/" class="reference-link" target="_blank">QALight - Тестування доступності</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Застосовувати принципи та методології тестування зручності використання</td><td><a href="https://testit.software/blog/usability-testing-guide/" class="reference-link" target="_blank">TestIT - Посібник з тестування юзабіліті</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Розробляти стратегії тестування сумісності між платформами</td><td><a href="https://dou.ua/lenta/articles/compatibility-testing-strategy/" class="reference-link" target="_blank">DOU - Стратегія тестування сумісності</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    
+                    <!-- Розширене API та інтеграційне тестування -->
+                    <tr><td class="category-cell" rowspan="4">Розширене API та інтеграційне тестування</td><td>Розуміти концепції та виклики тестування мікросервісів</td><td><a href="https://qalight.ua/baza-znaniy/microservices-testing/" class="reference-link" target="_blank">QALight - Тестування мікросервісів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Впроваджувати контрактне тестування, керовані споживачем</td><td><a href="https://testit.software/blog/contract-testing/" class="reference-link" target="_blank">TestIT - Контрактне тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Виконувати тестування продуктивності API та оптимізацію</td><td><a href="https://dou.ua/lenta/articles/api-performance-testing/" class="reference-link" target="_blank">DOU - Тестування продуктивності API</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Проектувати та виконувати стратегії інтеграційного тестування</td><td><a href="https://qalight.ua/baza-znaniy/integration-testing-strategies/" class="reference-link" target="_blank">QALight - Стратегії інтеграційного тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    
+                    <!-- Вдосконалення процесів -->
+                    <tr><td class="category-cell" rowspan="3">Вдосконалення процесів</td><td>Визначати та аналізувати метрики якості та KPI</td><td><a href="https://testit.software/blog/quality-metrics-framework/" class="reference-link" target="_blank">TestIT - Фреймворк метрик якості</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Впроваджувати безперервне тестування в CI/CD пайплайнах</td><td><a href="https://dou.ua/lenta/articles/continuous-testing-cicd/" class="reference-link" target="_blank">DOU - Безперервне тестування в CI/CD</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Оптимізувати тестові процеси та виявляти можливості для вдосконалення</td><td><a href="https://qalight.ua/baza-znaniy/test-process-optimization/" class="reference-link" target="_blank">QALight - Оптимізація тестових процесів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    
+                    <!-- Тестування продуктивності -->
+                    <tr><td class="category-cell" rowspan="3">Тестування продуктивності</td><td>Виконувати тестування продуктивності за допомогою JMeter</td><td><a href="https://testit.software/blog/jmeter-performance-testing/" class="reference-link" target="_blank">TestIT - Тестування продуктивності з JMeter</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Проектувати сценарії навантажувального тестування та аналізувати результати</td><td><a href="https://dou.ua/lenta/articles/load-testing-scenarios/" class="reference-link" target="_blank">DOU - Сценарії навантажувального тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Моніторити продуктивність та встановлювати базові метрики</td><td><a href="https://qalight.ua/baza-znaniy/performance-monitoring/" class="reference-link" target="_blank">QALight - Моніторинг продуктивності</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    
+                    <!-- Автоматизація та лідерство -->
+                    <tr><td class="category-cell" rowspan="5">Автоматизація та лідерство</td><td>Розробляти стратегію та дорожню карту тестової автоматизації</td><td><a href="https://dou.ua/lenta/articles/test-automation-strategy/" class="reference-link" target="_blank">DOU - Стратегія тестової автоматизації</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Вивчати основи програмування для тестової автоматизації</td><td><a href="https://qalight.ua/baza-znaniy/programming-for-testers/" class="reference-link" target="_blank">QALight - Програмування для тестувальників</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Впроваджувати базову автоматизацію Selenium WebDriver</td><td><a href="https://testit.software/blog/selenium-webdriver-basics/" class="reference-link" target="_blank">TestIT - Основи Selenium WebDriver</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Ефективно наставляти молодших членів команди</td><td><a href="https://dou.ua/lenta/articles/mentoring-junior-testers/" class="reference-link" target="_blank">DOU - Наставництво молодших тестувальників</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                    <tr><td>Ефективно комунікувати із стейкхолдерами та менеджментом</td><td><a href="https://qalight.ua/baza-znaniy/stakeholder-communication/" class="reference-link" target="_blank">QALight - Комунікація із стейкхолдерами</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level3')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Рівень 4: Старший → Лід QA Інженер -->
+        <div id="level4" class="tab-content">
+            <div class="level-header">
+                <h2>Рівень 4: Старший QA Інженер → Лід QA Інженер</h2>
+                <p>Розширена автоматизація, лідерство команди та стратегічне планування (20-25 вимог)</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-level4"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text-level4">0% Завершено (0/20)</div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="export-btn" onclick="exportToCSV('level4')">Експорт в CSV</button>
+                <button class="export-btn" onclick="exportToJSON('level4')">Експорт в JSON</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Категорія</th>
+                        <th>Опис навички</th>
+                        <th>Навчальні ресурси</th>
+                        <th>Завершено</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Розширений фреймворк автоматизації -->
+                    <tr><td class="category-cell" rowspan="5">Розширений фреймворк автоматизації</td><td>Проектувати архітектуру та патерни фреймворку автоматизації</td><td><a href="https://dou.ua/lenta/articles/automation-framework-architecture/" class="reference-link" target="_blank">DOU - Архітектура фреймворку автоматизації</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Впроваджувати Page Object Model та патерни дизайну</td><td><a href="https://qalight.ua/baza-znaniy/page-object-model/" class="reference-link" target="_blank">QALight - Page Object Model</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Розробляти фреймворки тестування, керовані даними</td><td><a href="https://testit.software/blog/data-driven-testing/" class="reference-link" target="_blank">TestIT - Тестування, кероване даними</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Впроваджувати стратегії кросбраузерної автоматизації</td><td><a href="https://dou.ua/lenta/articles/cross-browser-automation/" class="reference-link" target="_blank">DOU - Кросбраузерна автоматизація</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Створювати багаторазові компоненти тестового фреймворку</td><td><a href="https://qalight.ua/baza-znaniy/reusable-test-components/" class="reference-link" target="_blank">QALight - Багаторазові тестові компоненти</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    
+                    <!-- Інтеграція CI/CD -->
+                    <tr><td class="category-cell" rowspan="4">Інтеграція CI/CD</td><td>Інтегрувати тестову автоматизацію з пайплайнами Jenkins</td><td><a href="https://testit.software/blog/jenkins-integration/" class="reference-link" target="_blank">TestIT - Інтеграція з Jenkins</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Впроваджувати Docker контейнери для тестових середовищ</td><td><a href="https://dou.ua/lenta/articles/docker-for-testing/" class="reference-link" target="_blank">DOU - Docker для тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Проектувати стратегії паралельного виконання тестів</td><td><a href="https://qalight.ua/baza-znaniy/parallel-test-execution/" class="reference-link" target="_blank">QALight - Паралельне виконання тестів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Впроваджувати автоматизовану звітність та аналітику тестів</td><td><a href="https://testit.software/blog/automated-test-reporting/" class="reference-link" target="_blank">TestIT - Автоматизована звітність тестів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    
+                    <!-- Управління релізами -->
+                    <tr><td class="category-cell" rowspan="3">Управління релізами</td><td>Управляти тестовими активностями в циклах релізів</td><td><a href="https://dou.ua/lenta/articles/release-testing-management/" class="reference-link" target="_blank">DOU - Управління тестуванням релізів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Координувати багатопроектні тестові ініціативи</td><td><a href="https://qalight.ua/baza-znaniy/multi-project-coordination/" class="reference-link" target="_blank">QALight - Координація багатьох проектів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Впроваджувати ворота якості та критерії виходу</td><td><a href="https://testit.software/blog/quality-gates-implementation/" class="reference-link" target="_blank">TestIT - Впровадження воріт якості</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    
+                    <!-- Лідерство команди -->
+                    <tr><td class="category-cell" rowspan="4">Лідерство команди</td><td>Керувати QA командами та кросфункціональними ініціативами</td><td><a href="https://dou.ua/lenta/articles/qa-team-leadership/" class="reference-link" target="_blank">DOU - Лідерство QA команди</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Розробляти програми передачі знань та навчання команди</td><td><a href="https://qalight.ua/baza-znaniy/team-training-programs/" class="reference-link" target="_blank">QALight - Програми навчання команди</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Встановлювати стандарти тестування та найкращі практики</td><td><a href="https://testit.software/blog/testing-standards/" class="reference-link" target="_blank">TestIT - Стандарти тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Оцінювати та вибирати інструменти тестування для організації</td><td><a href="https://dou.ua/lenta/articles/testing-tools-evaluation/" class="reference-link" target="_blank">DOU - Оцінка інструментів тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    
+                    <!-- Стратегічне планування -->
+                    <tr><td class="category-cell" rowspan="4">Стратегічне планування</td><td>Розробляти організаційну QA стратегію та дорожню карту</td><td><a href="https://qalight.ua/baza-znaniy/qa-strategy-development/" class="reference-link" target="_blank">QALight - Розробка QA стратегії</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Аналізувати ROI тестової автоматизації та бізнес-цінність</td><td><a href="https://testit.software/blog/automation-roi-analysis/" class="reference-link" target="_blank">TestIT - Аналіз ROI автоматизації</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Проектувати програми метрик якості та фреймворки KPI</td><td><a href="https://dou.ua/lenta/articles/quality-metrics-programs/" class="reference-link" target="_blank">DOU - Програми метрик якості</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                    <tr><td>Керувати ініціативами вдосконалення процесів та трансформації</td><td><a href="https://qalight.ua/baza-znaniy/process-transformation/" class="reference-link" target="_blank">QALight - Трансформація процесів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level4')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Рівень 5: Лід → Головний QA Інженер -->
+        <div id="level5" class="tab-content">
+            <div class="level-header">
+                <h2>Рівень 5: Лід QA Інженер → Головний QA Інженер</h2>
+                <p>Стратегічне бачення, корпоративна архітектура та організаційний вплив (15-20 вимог)</p>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-level5"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text-level5">0% Завершено (0/16)</div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="export-btn" onclick="exportToCSV('level5')">Експорт в CSV</button>
+                <button class="export-btn" onclick="exportToJSON('level5')">Експорт в JSON</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Категорія</th>
+                        <th>Опис навички</th>
+                        <th>Навчальні ресурси</th>
+                        <th>Завершено</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Стратегічне лідерство -->
+                    <tr><td class="category-cell" rowspan="4">Стратегічне лідерство</td><td>Розробляти загальноорганізаційну QA стратегію та 3-річне бачення</td><td><a href="https://dou.ua/lenta/articles/enterprise-qa-strategy/" class="reference-link" target="_blank">DOU - Корпоративна QA стратегія</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Комунікувати цінність якості виконавчому керівництву</td><td><a href="https://qalight.ua/baza-znaniy/executive-communication/" class="reference-link" target="_blank">QALight - Комунікація з керівництвом</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Керувати трансформацією культури якості в організації</td><td><a href="https://testit.software/blog/quality-culture-transformation/" class="reference-link" target="_blank">TestIT - Трансформація культури якості</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Управляти плануванням бюджету та розподілом ресурсів для QA</td><td><a href="https://dou.ua/lenta/articles/qa-resource-management/" class="reference-link" target="_blank">DOU - Управління ресурсами QA</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    
+                    <!-- Корпоративна архітектура -->
+                    <tr><td class="category-cell" rowspan="4">Корпоративна архітектура</td><td>Проектувати корпоративну архітектуру тестової автоматизації</td><td><a href="https://qalight.ua/baza-znaniy/enterprise-test-architecture/" class="reference-link" target="_blank">QALight - Корпоративна тестова архітектура</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Розробляти власні фреймворки та бібліотечні рішення</td><td><a href="https://testit.software/blog/custom-framework-development/" class="reference-link" target="_blank">TestIT - Розробка власних фреймворків</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Архітектувати мультиплатформні стратегії автоматизації</td><td><a href="https://dou.ua/lenta/articles/multi-platform-automation/" class="reference-link" target="_blank">DOU - Мультиплатформна автоматизація</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Проектувати стратегії обслуговування та масштабування автоматизації</td><td><a href="https://qalight.ua/baza-znaniy/automation-scaling/" class="reference-link" target="_blank">QALight - Масштабування автоматизації</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    
+                    <!-- Хмарні та сучасні технології -->
+                    <tr><td class="category-cell" rowspan="3">Хмарні та сучасні технології</td><td>Впроваджувати хмарно-орієнтовані стратегії тестування</td><td><a href="https://testit.software/blog/cloud-testing-strategy/" class="reference-link" target="_blank">TestIT - Хмарна стратегія тестування</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Проектувати підходи до тестування для Kubernetes та контейнерів</td><td><a href="https://dou.ua/lenta/articles/kubernetes-testing/" class="reference-link" target="_blank">DOU - Тестування в Kubernetes</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Архітектувати тестування мікросервісів на корпоративному рівні</td><td><a href="https://qalight.ua/baza-znaniy/enterprise-microservices-testing/" class="reference-link" target="_blank">QALight - Корпоративне тестування мікросервісів</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    
+                    <!-- Інновації та дослідження -->
+                    <tr><td class="category-cell" rowspan="2">Інновації та дослідження</td><td>Оцінювати нові технології для тестування (AI/ML, автоматизація)</td><td><a href="https://testit.software/blog/ai-in-testing/" class="reference-link" target="_blank">TestIT - ШІ в тестуванні</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Керувати дослідницькими ініціативами тестування та доказами концепції</td><td><a href="https://dou.ua/lenta/articles/testing-research-initiatives/" class="reference-link" target="_blank">DOU - Дослідницькі ініціативи в тестуванні</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    
+                    <!-- Організаційний вплив -->
+                    <tr><td class="category-cell" rowspan="3">Організаційний вплив</td><td>Демонструвати ROI метрик якості та бізнес-вплив</td><td><a href="https://qalight.ua/baza-znaniy/quality-roi-analysis/" class="reference-link" target="_blank">QALight - Аналіз ROI якості</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Впливати на стейкхолдерів та керувати організаційними змінами</td><td><a href="https://testit.software/blog/leading-organizational-change/" class="reference-link" target="_blank">TestIT - Керування організаційними змінами</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                    <tr><td>Встановлювати галузеве лідерство думки та обмін знаннями</td><td><a href="https://dou.ua/lenta/articles/industry-thought-leadership/" class="reference-link" target="_blank">DOU - Галузеве лідерство думки</a></td><td><input type="checkbox" class="checkbox" onchange="updateProgress('level5')"></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Update progress for the current tab
+            updateProgress(tabId);
+        }
+        
+        function updateProgress(tabId) {
+            const tab = document.getElementById(tabId);
+            const checkboxes = tab.querySelectorAll('input[type="checkbox"]');
+            const checkedBoxes = tab.querySelectorAll('input[type="checkbox"]:checked');
+            
+            const total = checkboxes.length;
+            const completed = checkedBoxes.length;
+            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            const progressFill = document.getElementById(`progress-${tabId}`);
+            const progressText = document.getElementById(`progress-text-${tabId}`);
+            
+            if (progressFill) {
+                progressFill.style.width = percentage + '%';
+            }
+            
+            if (progressText) {
+                progressText.textContent = `${percentage}% Завершено (${completed}/${total})`;
+            }
+        }
+        
+        function exportToCSV(tabId) {
+            const tab = document.getElementById(tabId);
+            const table = tab.querySelector('table');
+            let csv = 'Категорія,Опис навички,Навчальні ресурси,Завершено\n';
+            
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 4) {
+                    const category = cells[0].textContent.trim();
+                    const description = cells[1].textContent.trim();
+                    const reference = cells[2].querySelector('a') ? cells[2].querySelector('a').href : '';
+                    const complete = cells[3].querySelector('input').checked ? 'Так' : 'Ні';
+                    
+                    csv += `"${category}","${description}","${reference}","${complete}"\n`;
+                }
+            });
+            
+            downloadFile(csv, `ukrainian-qa-requirements-${tabId}.csv`, 'text/csv');
+        }
+        
+        function exportToJSON(tabId) {
+            const tab = document.getElementById(tabId);
+            const table = tab.querySelector('table');
+            const data = [];
+            
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 4) {
+                    data.push({
+                        категорія: cells[0].textContent.trim(),
+                        навичка: cells[1].textContent.trim(),
+                        ресурс: cells[2].querySelector('a') ? cells[2].querySelector('a').href : '',
+                        завершено: cells[3].querySelector('input').checked
+                    });
+                }
+            });
+            
+            const json = JSON.stringify(data, null, 2);
+            downloadFile(json, `ukrainian-qa-requirements-${tabId}.json`, 'application/json');
+        }
+        
+        function downloadFile(content, filename, contentType) {
+            const blob = new Blob([content], { type: contentType });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', filename);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Save progress to localStorage
+        function saveProgress() {
+            const allTabs = ['level1', 'level2', 'level3', 'level4', 'level5'];
+            const progress = {};
+            
+            allTabs.forEach(tabId => {
+                const tab = document.getElementById(tabId);
+                const checkboxes = tab.querySelectorAll('input[type="checkbox"]');
+                progress[tabId] = Array.from(checkboxes).map(cb => cb.checked);
+            });
+            
+            localStorage.setItem('ukrainianQARequirementsProgress', JSON.stringify(progress));
+        }
+        
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('ukrainianQARequirementsProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                
+                Object.keys(progress).forEach(tabId => {
+                    const tab = document.getElementById(tabId);
+                    const checkboxes = tab.querySelectorAll('input[type="checkbox"]');
+                    
+                    progress[tabId].forEach((checked, index) => {
+                        if (checkboxes[index]) {
+                            checkboxes[index].checked = checked;
+                        }
+                    });
+                });
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            
+            const tabIds = ['level1', 'level2', 'level3', 'level4', 'level5'];
+            tabIds.forEach(tabId => updateProgress(tabId));
+            
+            // Add event listeners to save progress
+            document.addEventListener('change', function(e) {
+                if (e.target.type === 'checkbox') {
+                    saveProgress();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
