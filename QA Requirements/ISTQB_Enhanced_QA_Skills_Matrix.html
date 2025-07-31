@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Skills Matrix - Interactive Requirements Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+        
+        .progress-overview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .progress-card {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .progress-card h3 {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .progress-fill {
+            background: white;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: #ecf0f1;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-right: 1px solid #bdc3c7;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+        }
+        
+        .tab.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .tab:hover:not(.active) {
+            background: #d5dbdb;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .level-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .level-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .level-description {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .skills-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .skills-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .skill-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .skill-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .skill-checkbox {
+            margin-right: 15px;
+            margin-top: 5px;
+            transform: scale(1.2);
+        }
+        
+        .skill-info {
+            flex: 1;
+        }
+        
+        .skill-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .skill-description {
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .skill-resources {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .resource-link {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-link:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+        
+        .skill-assessment {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+            font-size: 0.95em;
+            color: #2d5a2d;
+        }
+        
+        .export-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .export-btn {
+            background: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .export-btn:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-right: none;
+                border-bottom: 1px solid #bdc3c7;
+            }
+            
+            .tab:last-child {
+                border-bottom: none;
+            }
+            
+            .progress-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>QA Skills Matrix</h1>
+            <p class="subtitle">Interactive Requirements Tracker - Based on Dima's Master Matrix</p>
+        </header>
+        
+        <div class="progress-overview">
+            <h2>Overall Progress</h2>
+            <div class="progress-grid" id="progressGrid">
+                <!-- Progress cards will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('trainee')">Trainee Level</button>
+            <button class="tab" onclick="showTab('junior')">Junior Level</button>
+            <button class="tab" onclick="showTab('middle')">Middle Level</button>
+            <button class="tab" onclick="showTab('senior')">Senior Level</button>
+            <button class="tab" onclick="showTab('lead')">Lead Level</button>
+        </div>
+        
+        <div id="trainee" class="tab-content active">
+            <div class="level-header">
+                <h2 class="level-title">Trainee Level</h2>
+                <p class="level-description">Basic understanding of testing fundamentals and core QA concepts</p>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">Foundation Knowledge</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-fundamentals">
+                            <div class="skill-info">
+                                <div class="skill-title">Testing Fundamentals</div>
+                                <div class="skill-description">Basic understanding of testing principles, importance of testing, and QA role in software development</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/software-testing-introduction-importance.html" class="resource-link" target="_blank">Testing Basics Guide</a>
+                                    <a href="https://www.softwaretestinghelp.com/types-of-software-testing/" class="resource-link" target="_blank">Testing Types Overview</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Explain testing principles and identify 5 different testing types</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-sdlc">
+                            <div class="skill-info">
+                                <div class="skill-title">SDLC Basics</div>
+                                <div class="skill-description">Understand software development lifecycle phases and where testing fits in each phase</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.tutorialspoint.com/sdlc/index.htm" class="resource-link" target="_blank">SDLC Tutorial</a>
+                                    <a href="https://www.atlassian.com/agile/project-management/project-management-intro" class="resource-link" target="_blank">Agile Basics</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Map testing activities to each SDLC phase</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-levels">
+                            <div class="skill-info">
+                                <div class="skill-title">Test Levels and Types</div>
+                                <div class="skill-description">High-level understanding of test levels (unit, integration, system) and basic test types</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.softwaretestinghelp.com/levels-of-testing/" class="resource-link" target="_blank">Test Levels Guide</a>
+                                    <a href="https://blog.testlodge.com/what-are-the-different-types-of-software-testing/" class="resource-link" target="_blank">Testing Types Explained</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create a diagram showing test levels and when each is performed</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-communication">
+                            <div class="skill-info">
+                                <div class="skill-title">Communication Importance</div>
+                                <div class="skill-description">Understand the critical role of clear communication in testing and QA processes</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/effective-communication-for-testers" class="resource-link" target="_blank">Communication for Testers</a>
+                                    <a href="https://blog.testlodge.com/how-to-write-good-bug-reports/" class="resource-link" target="_blank">Bug Report Writing</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Write clear, professional communication samples for different scenarios</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-technical">
+                            <div class="skill-info">
+                                <div class="skill-title">Limited Technical Skills Recognition</div>
+                                <div class="skill-description">Acknowledge current technical limitations while building foundation for growth</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.codecademy.com/learn/introduction-to-javascript" class="resource-link" target="_blank">JavaScript Basics</a>
+                                    <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML" class="resource-link" target="_blank">HTML Basics</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create personal learning plan for technical skill development</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-seven-principles">
+                            <div class="skill-info">
+                                <div class="skill-title">Seven Testing Principles (ISTQB)</div>
+                                <div class="skill-description">Understand and apply the seven fundamental testing principles: Testing shows defects, exhaustive testing is impossible, early testing, defect clustering, pesticide paradox, testing is context dependent, absence of errors fallacy</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/software-testing-seven-principles.html" class="resource-link" target="_blank">7 Testing Principles</a>
+                                    <a href="https://www.softwaretestinghelp.com/istqb-testing-principles/" class="resource-link" target="_blank">ISTQB Principles Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Explain each principle with real-world examples from your testing experience</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-static-testing">
+                            <div class="skill-info">
+                                <div class="skill-title">Static Testing Basics</div>
+                                <div class="skill-description">Understand static testing techniques including reviews, walkthroughs, and inspections. Know the difference between static and dynamic testing</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/static-dynamic-testing.html" class="resource-link" target="_blank">Static vs Dynamic Testing</a>
+                                    <a href="https://www.softwaretestinghelp.com/static-testing-and-dynamic-testing/" class="resource-link" target="_blank">Static Testing Tutorial</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Participate in 3 code reviews and document findings using review checklists</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-psychology">
+                            <div class="skill-info">
+                                <div class="skill-title">Psychology of Testing</div>
+                                <div class="skill-description">Understand the tester's mindset, difference between testing and debugging mindsets, and how to communicate defects constructively</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/the-psychology-of-testing" class="resource-link" target="_blank">Psychology of Testing</a>
+                                    <a href="https://www.guru99.com/psychology-testing.html" class="resource-link" target="_blank">Tester Mindset Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Demonstrate constructive defect communication in 5 different scenarios</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-ethics">
+                            <div class="skill-info">
+                                <div class="skill-title">Testing Ethics and Professional Conduct</div>
+                                <div class="skill-description">Understand professional ethics in testing, confidentiality, objectivity, and the ISTQB code of ethics</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.istqb.org/certifications/code-of-ethics" class="resource-link" target="_blank">ISTQB Code of Ethics</a>
+                                    <a href="https://www.softwaretestinghelp.com/software-testing-code-of-ethics/" class="resource-link" target="_blank">Testing Ethics Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Complete ethics scenario analysis and create personal code of conduct</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="junior" class="tab-content">
+            <div class="level-header">
+                <h2 class="level-title">Junior Level</h2>
+                <p class="level-description">Practical testing skills with basic bug reporting and test execution</p>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">Test Execution & Documentation</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-bug-reports">
+                            <div class="skill-info">
+                                <div class="skill-title">Basic Bug Reports</div>
+                                <div class="skill-description">Write clear, reproducible bug reports with proper steps and expected vs actual results</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.chiark.greenend.org.uk/~sgtatham/bugs.html" class="resource-link" target="_blank">How to Report Bugs Effectively</a>
+                                    <a href="https://blog.testlodge.com/how-to-write-good-bug-reports/" class="resource-link" target="_blank">Good Bug Reports Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Write 10 high-quality bug reports for sample application</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-tools">
+                            <div class="skill-info">
+                                <div class="skill-title">Basic Test Tools</div>
+                                <div class="skill-description">Use basic testing tools like browser dev tools, test management systems (Jira, TestRail)</div>
+                                <div class="skill-resources">
+                                    <a href="https://developer.chrome.com/docs/devtools/" class="resource-link" target="_blank">Chrome DevTools Guide</a>
+                                    <a href="https://www.atlassian.com/software/jira/guides/testing" class="resource-link" target="_blank">Jira for Testing</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Demonstrate proficiency with 3 essential testing tools</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-testing-types">
+                            <div class="skill-info">
+                                <div class="skill-title">Basic Testing Types</div>
+                                <div class="skill-description">Perform smoke testing, regression testing, and basic functional testing</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.softwaretestinghelp.com/smoke-testing-and-sanity-testing-difference/" class="resource-link" target="_blank">Smoke vs Sanity Testing</a>
+                                    <a href="https://www.guru99.com/regression-testing.html" class="resource-link" target="_blank">Regression Testing Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Execute smoke and regression test suites independently</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-bug-lifecycle">
+                            <div class="skill-info">
+                                <div class="skill-title">Bug Lifecycle Understanding</div>
+                                <div class="skill-description">Understand bug states, lifecycle transitions, and proper bug tracking</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.softwaretestinghelp.com/defect-life-cycle/" class="resource-link" target="_blank">Defect Life Cycle</a>
+                                    <a href="https://www.guru99.com/defect-life-cycle.html" class="resource-link" target="_blank">Bug Life Cycle Tutorial</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Track 5 bugs through complete lifecycle with proper documentation</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-api-basics">
+                            <div class="skill-info">
+                                <div class="skill-title">Basic API and HTTP Knowledge</div>
+                                <div class="skill-description">Understand HTTP methods, status codes, and basic API concepts</div>
+                                <div class="skill-resources">
+                                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" class="resource-link" target="_blank">HTTP Status Codes</a>
+                                    <a href="https://restfulapi.net/" class="resource-link" target="_blank">REST API Tutorial</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Identify API issues using browser dev tools and explain HTTP responses</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-test-cases">
+                            <div class="skill-info">
+                                <div class="skill-title">Clear Test Cases</div>
+                                <div class="skill-description">Write detailed test cases with clear steps, expected results, and test data</div>
+                                <div class="skill-resources">
+                                    <a href="https://blog.testlodge.com/how-to-write-test-cases/" class="resource-link" target="_blank">Test Case Writing Guide</a>
+                                    <a href="https://www.softwaretestinghelp.com/test-case-template-examples/" class="resource-link" target="_blank">Test Case Templates</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Write 25 comprehensive test cases for a feature module</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-techniques">
+                            <div class="skill-info">
+                                <div class="skill-title">Fundamental Test Techniques</div>
+                                <div class="skill-description">Apply basic test design techniques like equivalence partitioning and boundary value analysis</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/equivalence-partitioning-boundary-value-analysis.html" class="resource-link" target="_blank">Test Design Techniques</a>
+                                    <a href="https://www.softwaretestinghelp.com/what-is-boundary-value-analysis-and-equivalence-partitioning/" class="resource-link" target="_blank">BVA and EP Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Apply techniques to design test cases for form validation</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-test-planning">
+                            <div class="skill-info">
+                                <div class="skill-title">Test Planning Basics</div>
+                                <div class="skill-description">Understand test plan structure, test strategy vs test plan, and contribute to test planning activities</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/what-everybody-ought-to-know-about-test-planing.html" class="resource-link" target="_blank">Test Planning Guide</a>
+                                    <a href="https://www.softwaretestinghelp.com/test-plan-template/" class="resource-link" target="_blank">Test Plan Templates</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create test plan section for a module and present to senior team member</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-configuration-mgmt">
+                            <div class="skill-info">
+                                <div class="skill-title">Configuration Management for Testing</div>
+                                <div class="skill-description">Understand version control basics, test artifact management, and maintaining test environment configurations</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.atlassian.com/git/tutorials/what-is-version-control" class="resource-link" target="_blank">Version Control Basics</a>
+                                    <a href="https://www.guru99.com/software-configuration-management-tutorial.html" class="resource-link" target="_blank">Configuration Management</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Successfully manage test artifacts in version control for one release cycle</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-test-monitoring">
+                            <div class="skill-info">
+                                <div class="skill-title">Test Monitoring and Control Basics</div>
+                                <div class="skill-description">Track test progress, understand basic metrics (test execution rate, defect density), and report status</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/how-test-metrics-accelerate-continuous-testing.html" class="resource-link" target="_blank">Test Metrics Basics</a>
+                                    <a href="https://www.softwaretestinghelp.com/test-monitoring-and-test-control/" class="resource-link" target="_blank">Monitoring & Control</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create weekly test status reports with key metrics for 1 month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">ISTQB Foundation Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-static-techniques">
+                            <div class="skill-info">
+                                <div class="skill-title">Static Testing Techniques</div>
+                                <div class="skill-description">Perform reviews, understand review types (informal, walkthrough, technical, inspection), and use checklists</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.softwaretestinghelp.com/static-testing/" class="resource-link" target="_blank">Static Testing Methods</a>
+                                    <a href="https://www.guru99.com/testing-review.html" class="resource-link" target="_blank">Review Techniques</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Lead an informal review and participate in 2 formal inspections</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="junior-tool-support">
+                            <div class="skill-info">
+                                <div class="skill-title">Test Tool Categories</div>
+                                <div class="skill-description">Understand different categories of test tools (management, static, test execution, performance) and their benefits/risks</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/testing-tools.html" class="resource-link" target="_blank">Testing Tools Overview</a>
+                                    <a href="https://www.softwaretestinghelp.com/types-of-software-testing-tools/" class="resource-link" target="_blank">Tool Categories Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Evaluate and present comparison of 3 tools in different categories</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="middle" class="tab-content">
+            <div class="level-header">
+                <h2 class="level-title">Middle Level</h2>
+                <p class="level-description">Independent feature testing with advanced API knowledge and mentoring abilities</p>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">Advanced Testing & Leadership</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-feature-planning">
+                            <div class="skill-info">
+                                <div class="skill-title">Independent Feature Planning</div>
+                                <div class="skill-description">Plan and execute testing for entire features independently without guidance</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/test-planning-for-agile-teams" class="resource-link" target="_blank">Test Planning Guide</a>
+                                    <a href="https://blog.testlodge.com/test-planning/" class="resource-link" target="_blank">Feature Test Planning</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create comprehensive test plan for complex feature independently</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-api-backend">
+                            <div class="skill-info">
+                                <div class="skill-title">Advanced API and Backend Testing</div>
+                                <div class="skill-description">Perform comprehensive API testing including validation, error handling, and performance</div>
+                                <div class="skill-resources">
+                                    <a href="https://learning.postman.com/docs/getting-started/introduction/" class="resource-link" target="_blank">Postman Learning Center</a>
+                                    <a href="https://www.guru99.com/api-testing.html" class="resource-link" target="_blank">API Testing Complete Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Design and execute comprehensive API test suite with automated validation</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-test-strategy">
+                            <div class="skill-info">
+                                <div class="skill-title">Test Strategy Definition</div>
+                                <div class="skill-description">Define comprehensive test strategies including scope, approach, and risk assessment</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/how-to-create-test-strategy-document.html" class="resource-link" target="_blank">Test Strategy Document</a>
+                                    <a href="https://www.softwaretestinghelp.com/test-strategy-vs-test-plan/" class="resource-link" target="_blank">Strategy vs Plan</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create test strategy document for medium-complexity project</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-risk-analysis">
+                            <div class="skill-info">
+                                <div class="skill-title">Risk Identification</div>
+                                <div class="skill-description">Identify testing risks, critical paths, and prioritize testing efforts accordingly</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/risk-based-testing.html" class="resource-link" target="_blank">Risk-Based Testing</a>
+                                    <a href="https://www.softwaretestinghelp.com/risk-analysis-in-software-testing/" class="resource-link" target="_blank">Risk Analysis Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Conduct risk analysis and create risk-based test plan</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-coordination">
+                            <div class="skill-info">
+                                <div class="skill-title">Testing Coordination</div>
+                                <div class="skill-description">Coordinate testing activities, priorities, and collaborate with multiple stakeholders</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.atlassian.com/agile/project-management/cross-functional-teams" class="resource-link" target="_blank">Cross-functional Collaboration</a>
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/stakeholder-management-for-testers" class="resource-link" target="_blank">Stakeholder Management</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Successfully coordinate testing across multiple teams for one sprint</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-advanced-techniques">
+                            <div class="skill-info">
+                                <div class="skill-title">Advanced Test Design</div>
+                                <div class="skill-description">Apply advanced test design techniques including decision tables, pairwise testing</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/decision-table-testing.html" class="resource-link" target="_blank">Decision Table Testing</a>
+                                    <a href="https://www.pairwise.org/" class="resource-link" target="_blank">Pairwise Testing</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Apply 3 advanced techniques to design comprehensive test suite</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-whitebox">
+                            <div class="skill-info">
+                                <div class="skill-title">White-box Testing Basics</div>
+                                <div class="skill-description">Understand code structure and apply basic white-box testing techniques</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/white-box-testing.html" class="resource-link" target="_blank">White-box Testing Guide</a>
+                                    <a href="https://www.softwaretestinghelp.com/white-box-testing-techniques/" class="resource-link" target="_blank">White-box Techniques</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Perform code coverage analysis and design structure-based tests</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="middle-mentoring">
+                            <div class="skill-info">
+                                <div class="skill-title">Junior Team Mentoring</div>
+                                <div class="skill-description">Mentor and guide junior QA team members effectively</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/mentoring-in-testing" class="resource-link" target="_blank">Mentoring in Testing</a>
+                                    <a href="https://blog.testlodge.com/mentoring-junior-testers/" class="resource-link" target="_blank">Junior Tester Mentoring</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Successfully mentor 2 junior team members for 3 months</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="senior" class="tab-content">
+            <div class="level-header">
+                <h2 class="level-title">Senior Level</h2>
+                <p class="level-description">Strategic test leadership with comprehensive quality metrics and team coaching</p>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">Strategic Leadership & Quality Management</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-strategy">
+                            <div class="skill-info">
+                                <div class="skill-title">Comprehensive Test Strategy</div>
+                                <div class="skill-description">Define enterprise-level test strategies aligned with business objectives</div>
+                                <div class="skill-resources">
+                                    <a href="https://martinfowler.com/articles/practical-test-pyramid.html" class="resource-link" target="_blank">Test Strategy Patterns</a>
+                                    <a href="https://www.guru99.com/how-to-create-test-strategy-document.html" class="resource-link" target="_blank">Strategic Test Planning</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create comprehensive test strategy for enterprise application</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-risk-leadership">
+                            <div class="skill-info">
+                                <div class="skill-title">Risk Analysis Leadership</div>
+                                <div class="skill-description">Lead comprehensive risk analysis and mitigation strategies across projects</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/risk-based-testing.html" class="resource-link" target="_blank">Advanced Risk-Based Testing</a>
+                                    <a href="https://www.softwaretestinghelp.com/risk-management-in-software-testing/" class="resource-link" target="_blank">Risk Management</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Lead risk assessment workshop and implement mitigation strategies</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-metrics">
+                            <div class="skill-info">
+                                <div class="skill-title">Quality Metrics Implementation</div>
+                                <div class="skill-description">Implement and track comprehensive quality metrics and KPIs</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/software-testing-metrics-complete-tutorial.html" class="resource-link" target="_blank">Testing Metrics Guide</a>
+                                    <a href="https://blog.testlodge.com/test-metrics/" class="resource-link" target="_blank">Quality Metrics</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Design and implement quality dashboard with key metrics</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-coaching">
+                            <div class="skill-info">
+                                <div class="skill-title">QA Team Coaching</div>
+                                <div class="skill-description">Coach and develop QA team members at all levels</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/coaching-testers" class="resource-link" target="_blank">Coaching Testers</a>
+                                    <a href="https://blog.testlodge.com/building-high-performing-qa-teams/" class="resource-link" target="_blank">Building QA Teams</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Develop career growth plans for 3 team members</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-collaboration">
+                            <div class="skill-info">
+                                <div class="skill-title">Cross-functional Collaboration</div>
+                                <div class="skill-description">Lead complex cross-functional initiatives and stakeholder management</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.atlassian.com/agile/project-management/cross-functional-teams" class="resource-link" target="_blank">Cross-functional Leadership</a>
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/working-with-stakeholders" class="resource-link" target="_blank">Stakeholder Management</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Successfully lead multi-team quality initiative</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-automation">
+                            <div class="skill-info">
+                                <div class="skill-title">Advanced Test Automation</div>
+                                <div class="skill-description">Architect and implement advanced test automation strategies</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.selenium.dev/documentation/test_practices/" class="resource-link" target="_blank">Selenium Best Practices</a>
+                                    <a href="https://martinfowler.com/articles/practical-test-pyramid.html" class="resource-link" target="_blank">Test Automation Strategy</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Design and implement automation framework architecture</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-process">
+                            <div class="skill-info">
+                                <div class="skill-title">Process Improvements</div>
+                                <div class="skill-description">Drive continuous improvement in testing processes and methodologies</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/software-testing-process-improvement.html" class="resource-link" target="_blank">Process Improvement</a>
+                                    <a href="https://blog.testlodge.com/continuous-testing/" class="resource-link" target="_blank">Continuous Testing</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Implement process improvement with measurable results</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="senior-business-alignment">
+                            <div class="skill-info">
+                                <div class="skill-title">Business Goal Alignment</div>
+                                <div class="skill-description">Align testing strategies with business objectives and communicate value to leadership</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/communicating-testing-value" class="resource-link" target="_blank">Communicating Testing Value</a>
+                                    <a href="https://blog.testlodge.com/testing-roi/" class="resource-link" target="_blank">Testing ROI</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Present testing value proposition to executive leadership</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="lead" class="tab-content">
+            <div class="level-header">
+                <h2 class="level-title">Lead Level</h2>
+                <p class="level-description">Strategic QA leadership with organizational impact and culture transformation</p>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">Organizational Leadership & Strategic Vision</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-policies">
+                            <div class="skill-info">
+                                <div class="skill-title">QA Policies and Strategies</div>
+                                <div class="skill-description">Define organization-wide QA policies, standards, and strategic direction</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/software-testing-process-improvement.html" class="resource-link" target="_blank">QA Process Framework</a>
+                                    <a href="https://blog.testlodge.com/qa-strategy/" class="resource-link" target="_blank">Strategic QA Planning</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Create comprehensive QA policy framework for organization</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-end-to-end">
+                            <div class="skill-info">
+                                <div class="skill-title">End-to-end Testing Management</div>
+                                <div class="skill-description">Manage testing processes across multiple teams, projects, and product lines</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.atlassian.com/continuous-delivery/continuous-testing" class="resource-link" target="_blank">Enterprise Testing Strategy</a>
+                                    <a href="https://martinfowler.com/articles/microservice-testing/" class="resource-link" target="_blank">Large-scale Testing</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Successfully manage testing across 5+ concurrent projects</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-hiring">
+                            <div class="skill-info">
+                                <div class="skill-title">Hiring and Onboarding Leadership</div>
+                                <div class="skill-description">Lead QA hiring processes and design comprehensive onboarding programs</div>
+                                <div class="skill-resources">
+                                    <a href="https://blog.testlodge.com/hiring-qa-engineers/" class="resource-link" target="_blank">QA Hiring Guide</a>
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/onboarding-testers" class="resource-link" target="_blank">Tester Onboarding</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Design and implement comprehensive QA hiring and onboarding process</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-continuous-improvement">
+                            <div class="skill-info">
+                                <div class="skill-title">Continuous Improvement Facilitation</div>
+                                <div class="skill-description">Facilitate organization-wide continuous improvement initiatives</div>
+                                <div class="skill-resources">
+                                    <a href="https://itrevolution.com/articles/devops-culture-part-1/" class="resource-link" target="_blank">Quality Culture Transformation</a>
+                                    <a href="https://www.guru99.com/software-testing-process-improvement.html" class="resource-link" target="_blank">Process Improvement Framework</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Lead organization-wide quality improvement initiative with measurable results</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-dashboards">
+                            <div class="skill-info">
+                                <div class="skill-title">Test Dashboard Building</div>
+                                <div class="skill-description">Build comprehensive testing dashboards and executive-level reporting systems</div>
+                                <div class="skill-resources">
+                                    <a href="https://blog.testlodge.com/test-metrics/" class="resource-link" target="_blank">Testing Dashboards</a>
+                                    <a href="https://www.guru99.com/software-testing-metrics-complete-tutorial.html" class="resource-link" target="_blank">Advanced Metrics</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Design and implement executive-level quality dashboard</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-communication">
+                            <div class="skill-info">
+                                <div class="skill-title">Quality Goal Communication</div>
+                                <div class="skill-description">Communicate quality objectives and align teams with business goals</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.ministryoftesting.com/dojo/lessons/communicating-testing-value" class="resource-link" target="_blank">Executive Communication</a>
+                                    <a href="https://blog.testlodge.com/testing-roi/" class="resource-link" target="_blank">Quality Value Communication</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Successfully align multiple teams with unified quality objectives</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-culture">
+                            <div class="skill-info">
+                                <div class="skill-title">Quality Culture Promotion</div>
+                                <div class="skill-description">Promote and embed quality culture throughout the organization</div>
+                                <div class="skill-resources">
+                                    <a href="https://itrevolution.com/articles/devops-culture-part-1/" class="resource-link" target="_blank">Building Quality Culture</a>
+                                    <a href="https://blog.testlodge.com/quality-culture/" class="resource-link" target="_blank">Quality Culture Guide</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Transform organizational approach to quality with measurable culture change</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="lead-strategic-decisions">
+                            <div class="skill-info">
+                                <div class="skill-title">Strategic Testing Decisions</div>
+                                <div class="skill-description">Drive high-level strategic decisions around testing approaches and technology adoption</div>
+                                <div class="skill-resources">
+                                    <a href="https://martinfowler.com/articles/practical-test-pyramid.html" class="resource-link" target="_blank">Strategic Testing Approaches</a>
+                                    <a href="https://blog.testlodge.com/testing-strategy/" class="resource-link" target="_blank">Strategic Decision Making</a>
+                                </div>
+                                <div class="skill-assessment">Assessment: Lead strategic testing transformation with clear business impact</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="export-section">
+            <h3>Export Progress</h3>
+            <p>Download your progress as a CSV file to track completion and plan development</p>
+            <button class="export-btn" onclick="exportProgress()">Export to CSV</button>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize progress tracking
+        let skillsData = {};
+        
+        // Load saved progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('qaSkillsProgress');
+            if (saved) {
+                skillsData = JSON.parse(saved);
+                updateCheckboxes();
+                updateProgressDisplay();
+            }
+        }
+        
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('qaSkillsProgress', JSON.stringify(skillsData));
+        }
+        
+        // Update checkboxes based on saved data
+        function updateCheckboxes() {
+            document.querySelectorAll('.skill-checkbox').forEach(checkbox => {
+                const skillId = checkbox.getAttribute('data-skill');
+                checkbox.checked = skillsData[skillId] || false;
+            });
+        }
+        
+        // Handle checkbox changes
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('skill-checkbox')) {
+                const skillId = e.target.getAttribute('data-skill');
+                skillsData[skillId] = e.target.checked;
+                saveProgress();
+                updateProgressDisplay();
+            }
+        });
+        
+        // Update progress display
+        function updateProgressDisplay() {
+            const levels = {
+                trainee: { name: 'Trainee', total: 5, completed: 0 },
+                junior: { name: 'Junior', total: 7, completed: 0 },
+                middle: { name: 'Middle', total: 8, completed: 0 },
+                senior: { name: 'Senior', total: 8, completed: 0 },
+                lead: { name: 'Lead', total: 8, completed: 0 }
+            };
+            
+            // Count completed skills for each level
+            Object.keys(skillsData).forEach(skillId => {
+                if (skillsData[skillId]) {
+                    const level = skillId.split('-')[0];
+                    if (levels[level]) {
+                        levels[level].completed++;
+                    }
+                }
+            });
+            
+            // Update progress cards
+            const progressGrid = document.getElementById('progressGrid');
+            progressGrid.innerHTML = '';
+            
+            Object.keys(levels).forEach(levelKey => {
+                const level = levels[levelKey];
+                const percentage = Math.round((level.completed / level.total) * 100);
+                
+                const card = document.createElement('div');
+                card.className = 'progress-card';
+                card.innerHTML = `
+                    <h3>${level.name} Level</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                    </div>
+                    <div>${level.completed}/${level.total} skills (${percentage}%)</div>
+                `;
+                progressGrid.appendChild(card);
+            });
+        }
+        
+        // Tab functionality
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        // Export functionality
+        function exportProgress() {
+            const levels = ['trainee', 'junior', 'middle', 'senior', 'lead'];
+            let csvContent = 'Level,Skill,Completed,Assessment\n';
+            
+            levels.forEach(level => {
+                const tabContent = document.getElementById(level);
+                const skillItems = tabContent.querySelectorAll('.skill-item');
+                
+                skillItems.forEach(item => {
+                    const checkbox = item.querySelector('.skill-checkbox');
+                    const skillTitle = item.querySelector('.skill-title').textContent;
+                    const assessment = item.querySelector('.skill-assessment').textContent.replace('Assessment: ', '');
+                    const completed = checkbox.checked ? 'Yes' : 'No';
+                    const levelName = level.charAt(0).toUpperCase() + level.slice(1);
+                    
+                    csvContent += `"${levelName}","${skillTitle}","${completed}","${assessment}"\n`;
+                });
+            });
+            
+            // Create and download CSV file
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'qa-skills-progress.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            updateProgressDisplay();
+        });
+    </script>
+</body>
+</html>
