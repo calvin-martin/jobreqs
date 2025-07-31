@@ -113,6 +113,9 @@ Organize requirements into 5-7 core categories relevant to your discipline:
 - Include screenshots or code samples where relevant
 - Updated within last 3 years for technical content
 - From recognized industry sources
+- **All links must be verified as working before inclusion**
+- **Avoid sites with excessive advertisements that detract from content**
+- **Prefer clean, professional educational sites**
 
 ### ❌ **Avoid These Reference Types:**
 - Academic papers without practical application
@@ -120,6 +123,70 @@ Organize requirements into 5-7 core categories relevant to your discipline:
 - Theoretical standards documents without implementation guides
 - Basic definitions without depth or examples
 - Paywalled content without free alternatives
+- **Broken or dead links**
+- **Sites overwhelmed with pop-ups or intrusive ads**
+- **Content farms with low-quality or copied material**
+
+## Link Validation Protocol
+
+### **MANDATORY: Verify All Links Before Inclusion**
+
+Before adding any reference link to requirements documents, **ALWAYS**:
+
+1. **Test the Link**: Click and verify it loads the expected content
+2. **Validate Content Relevance**: Ensure the page content directly relates to the skill topic
+3. **Check Content Quality**: Verify it contains practical, actionable information
+4. **Assess User Experience**: Confirm the site is professional and not overwhelmed with ads
+
+### **Known Problematic Sites** (as of 2024):
+- **guru99.com**: Many pages return CSS/JavaScript instead of content
+- **Some tutorialspoint.com pages**: May have outdated or generic content
+- **Sites with excessive pop-ups**: Detract from learning experience
+- **Content aggregation sites**: Often have low-quality, copied material
+
+### **Trusted Resource Categories**:
+
+#### **Official Documentation**
+- Technology vendor official docs (e.g., Selenium, Chrome DevTools)
+- Standards bodies (OWASP, W3C, ISTQB official sites)
+- Platform documentation (Atlassian, GitHub, major cloud providers)
+
+#### **Recognized Educational Platforms**
+- University courses and materials
+- Professional training organizations
+- Industry-recognized certification bodies
+- Established technology companies' learning resources
+
+#### **Quality Technical Content**
+- Martin Fowler's articles (software architecture/testing)
+- Nielsen Norman Group (UX/usability)
+- Mozilla Developer Network (web standards)
+- Test Automation University (automation learning)
+
+### **Link Validation Action Plan**:
+
+1. **If link is broken/invalid**: Remove it entirely
+2. **If content is irrelevant**: Find appropriate replacement or leave blank
+3. **If no quality resources exist**: Leave resource section empty with comment
+4. **Better no link than bad link**: Empty resource sections are acceptable
+
+### **Documentation Format for Missing Resources**:
+```html
+<div class="skill-resources">
+    <!-- No validated links found for this topic -->
+</div>
+```
+
+### **Maintenance Schedule**:
+- **Quarterly**: Spot-check 25% of all links across all profession documents
+- **Annual**: Full link validation audit of entire repository  
+- **Before release**: Validate all new links added to documents
+- **User reports**: Address broken link reports within 48 hours
+
+### **Link Validation Tools**:
+- **Manual Validation**: Follow the checklist in `LINK_VALIDATION_README.md`
+- **Automated Validation**: Use `validate_links.py` script for bulk link checking
+- **Integration**: Run validation before committing changes to repository
 
 ## Content Structure Guidelines
 
