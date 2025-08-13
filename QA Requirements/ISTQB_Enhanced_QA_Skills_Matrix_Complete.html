@@ -67,6 +67,10 @@
             text-align: center;
         }
         
+        .progress-card.completed {
+            background: linear-gradient(45deg, #27ae60, #229954);
+        }
+        
         .progress-card h3 {
             font-size: 0.9em;
             margin-bottom: 10px;
@@ -241,6 +245,51 @@
             color: #2d5a2d;
         }
         
+        .sub-checklist {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .sub-checklist-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 12px;
+            font-size: 1em;
+        }
+        
+        .sub-checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            padding: 8px 0;
+        }
+        
+        .sub-checklist-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sub-checkbox {
+            margin-right: 10px;
+            margin-top: 2px;
+            transform: scale(1.1);
+        }
+        
+        .sub-item-text {
+            color: #495057;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .sub-progress {
+            font-size: 0.8em;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 8px;
+        }
+        
         .export-section {
             background: white;
             padding: 20px;
@@ -354,7 +403,38 @@
                                     <a href="https://www.guru99.com/software-testing-introduction-importance.html" class="resource-link" target="_blank">Testing Basics Guide</a>
                                     <a href="https://www.softwaretestinghelp.com/types-of-software-testing/" class="resource-link" target="_blank">Testing Types Overview</a>
                                 </div>
-                                <div class="skill-assessment">Assessment: Explain testing principles and identify 5 different testing types</div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Complete these fundamentals to master Testing Basics:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-fundamentals" data-sub="understanding-principles">
+                                        <div class="sub-item-text">Understanding Testing Principles - Define software testing objectives, explain verification vs validation, understand testing vs debugging</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-fundamentals" data-sub="importance-testing">
+                                        <div class="sub-item-text">Importance of Testing - Explain why testing is crucial, understand cost of fixing bugs at different stages, know when testing should start</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-fundamentals" data-sub="qa-role">
+                                        <div class="sub-item-text">QA Role in Software Development - Understand QA vs developer responsibilities, know how QA fits in development team, identify QA touchpoints</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-fundamentals" data-sub="testing-types">
+                                        <div class="sub-item-text">Basic Testing Types - Functional vs Non-functional, Black/White/Gray box testing, Manual vs Automated, Positive vs Negative, Static vs Dynamic</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-fundamentals" data-sub="test-levels">
+                                        <div class="sub-item-text">Test Levels - Unit testing concepts, Integration testing basics, System testing overview, Acceptance testing fundamentals</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="fundamentals-progress">0/5</span> completed</div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -369,7 +449,47 @@
                                     <a href="https://www.guru99.com/software-testing-seven-principles.html" class="resource-link" target="_blank">7 Testing Principles</a>
                                     <a href="https://www.softwaretestinghelp.com/istqb-testing-principles/" class="resource-link" target="_blank">ISTQB Principles Guide</a>
                                 </div>
-                                <div class="skill-assessment">Assessment: Explain each principle with real-world examples from your testing experience</div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Master each of the 7 ISTQB testing principles:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-seven-principles" data-sub="shows-defects">
+                                        <div class="sub-item-text">Principle 1: Testing shows the presence of defects, not their absence - Understand that testing can prove defects exist but cannot prove they don't exist</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-seven-principles" data-sub="exhaustive-impossible">
+                                        <div class="sub-item-text">Principle 2: Exhaustive testing is impossible - Know that testing everything is not feasible, risk analysis and priorities are essential</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-seven-principles" data-sub="early-testing">
+                                        <div class="sub-item-text">Principle 3: Early testing saves time and money - Understand that finding and fixing defects early in SDLC is more cost-effective</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-seven-principles" data-sub="defect-clustering">
+                                        <div class="sub-item-text">Principle 4: Defects cluster together - Know that small number of modules usually contain most defects (80/20 rule)</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-seven-principles" data-sub="pesticide-paradox">
+                                        <div class="sub-item-text">Principle 5: Beware of the pesticide paradox - Understand that repeated tests become less effective, need to review and revise test cases</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-seven-principles" data-sub="context-dependent">
+                                        <div class="sub-item-text">Principle 6: Testing is context dependent - Know that testing approach varies based on application type, domain, and business needs</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-seven-principles" data-sub="absence-errors">
+                                        <div class="sub-item-text">Principle 7: Absence of errors is a fallacy - Understand that finding few defects doesn't mean software is ready for release</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="seven-principles-progress">0/7</span> completed</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -384,7 +504,32 @@
                                     <a href="https://www.tutorialspoint.com/sdlc/index.htm" class="resource-link" target="_blank">SDLC Tutorial</a>
                                     <a href="https://www.atlassian.com/agile/project-management/project-management-intro" class="resource-link" target="_blank">Agile Basics</a>
                                 </div>
-                                <div class="skill-assessment">Assessment: Map testing activities to each SDLC phase</div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Understand SDLC phases and testing integration:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-sdlc" data-sub="sdlc-phases">
+                                        <div class="sub-item-text">SDLC Phases Overview - Requirements analysis, Design, Implementation, Testing, Deployment, Maintenance phases</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-sdlc" data-sub="testing-design">
+                                        <div class="sub-item-text">Testing in Design Phase - Design reviews, test planning, test case design, test environment planning</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-sdlc" data-sub="testing-implementation">
+                                        <div class="sub-item-text">Testing in Implementation - Code reviews, unit testing support, integration testing preparation</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-sdlc" data-sub="sdlc-models">
+                                        <div class="sub-item-text">SDLC Models - Waterfall, Agile, V-Model basics and how testing approach differs in each</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="sdlc-progress">0/4</span> completed</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -399,7 +544,42 @@
                                     <a href="https://www.guru99.com/static-dynamic-testing.html" class="resource-link" target="_blank">Static vs Dynamic Testing</a>
                                     <a href="https://www.softwaretestinghelp.com/static-testing-and-dynamic-testing/" class="resource-link" target="_blank">Static Testing Tutorial</a>
                                 </div>
-                                <div class="skill-assessment">Assessment: Participate in 3 code reviews and document findings using review checklists</div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Learn static testing fundamentals for beginners:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-static-testing" data-sub="static-vs-dynamic">
+                                        <div class="sub-item-text">Static vs Dynamic Testing - Static testing examines code/documents without running software; Dynamic testing executes the software</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-static-testing" data-sub="document-review">
+                                        <div class="sub-item-text">Document Review Techniques - Checking requirements and design documents for completeness and clarity, reviewing test cases, informal peer reviews of specifications</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-static-testing" data-sub="code-inspection-optional">
+                                        <div class="sub-item-text">Basic Code Inspection (Optional) - Reading code for obvious errors and standard violations - valuable for those with technical background</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-static-testing" data-sub="what-to-look-for">
+                                        <div class="sub-item-text">What to Look For - Logic errors, missing information, unclear requirements, inconsistencies, coding standard violations</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-static-testing" data-sub="static-benefits">
+                                        <div class="sub-item-text">Benefits of Static Testing - Finds defects early (cheaper to fix), prevents defects, improves quality before code runs</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-static-testing" data-sub="getting-started">
+                                        <div class="sub-item-text">Getting Started - Start with simple document reviews, ask clarifying questions, practice reading code for obvious errors</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="static-testing-progress">0/6</span> completed</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -414,7 +594,37 @@
                                     <a href="https://www.ministryoftesting.com/dojo/lessons/the-psychology-of-testing" class="resource-link" target="_blank">Psychology of Testing</a>
                                     <a href="https://www.guru99.com/psychology-testing.html" class="resource-link" target="_blank">Tester Mindset Guide</a>
                                 </div>
-                                <div class="skill-assessment">Assessment: Demonstrate constructive defect communication in 5 different scenarios</div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Learn essential tester attitudes and communication skills:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-psychology" data-sub="testing-vs-debugging">
+                                        <div class="sub-item-text">Testing vs Debugging - Testing finds problems, debugging fixes them; testers and developers work together with different roles</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-psychology" data-sub="basic-tester-qualities">
+                                        <div class="sub-item-text">Basic Tester Qualities - Curiosity (asking "what if?"), attention to detail, patience, willingness to explore and learn</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-psychology" data-sub="professional-communication">
+                                        <div class="sub-item-text">Professional Communication - Report bugs clearly with steps to reproduce, ask good questions, work respectfully with team members</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-psychology" data-sub="learning-mindset">
+                                        <div class="sub-item-text">Learning Mindset - Be open to feedback, ask for help when needed, learn from mistakes, continuously improve testing skills</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-psychology" data-sub="quality-focus">
+                                        <div class="sub-item-text">Quality Focus - Understand that testers help improve software quality, not just find problems; everyone wants good software</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="psychology-progress">0/5</span> completed</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -429,7 +639,182 @@
                                     <a href="https://www.istqb.org/certifications/code-of-ethics" class="resource-link" target="_blank">ISTQB Code of Ethics</a>
                                     <a href="https://www.softwaretestinghelp.com/software-testing-code-of-ethics/" class="resource-link" target="_blank">Testing Ethics Guide</a>
                                 </div>
-                                <div class="skill-assessment">Assessment: Complete ethics scenario analysis and create personal code of conduct</div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Practice basic professional behavior in testing work:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-ethics" data-sub="basic-professional-behavior">
+                                        <div class="sub-item-text">Basic Professional Behavior - Be honest, reliable, and respectful in all testing work; show up on time and meet commitments</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-ethics" data-sub="confidentiality-basics">
+                                        <div class="sub-item-text">Confidentiality Basics - Don't share company information outside work, respect customer privacy, keep work discussions at work</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-ethics" data-sub="honest-reporting">
+                                        <div class="sub-item-text">Honest Reporting - Report exactly what you found during testing, don't exaggerate problems or hide issues you discover</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-ethics" data-sub="learning-growth">
+                                        <div class="sub-item-text">Learning and Growth - Ask questions when unsure, admit when you don't know something, be open to feedback and learning</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-ethics" data-sub="working-well-others">
+                                        <div class="sub-item-text">Working Well with Others - Communicate clearly, be helpful to teammates, respect different perspectives and work styles</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="ethics-progress">0/5</span> completed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-linux-basics">
+                            <div class="skill-info">
+                                <div class="skill-title">Linux Basics for Testing</div>
+                                <div class="skill-description">Essential Linux command-line skills for software testers working in development environments</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/terminal-file-manager.html" class="resource-link" target="_blank">Linux Terminal Basics</a>
+                                    <a href="https://www.softwaretestinghelp.com/unix-shell-scripting-tutorial/" class="resource-link" target="_blank">Unix Commands for Testers</a>
+                                </div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Master essential Linux skills for testing:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-linux-basics" data-sub="basic-commands">
+                                        <div class="sub-item-text">Basic Commands - ls (list files), cd (change directory), pwd (current directory), mkdir (create folder), rm (delete files)</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-linux-basics" data-sub="file-operations">
+                                        <div class="sub-item-text">File Operations - cat (view file), grep (search text), find (locate files), cp (copy), mv (move/rename files)</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-linux-basics" data-sub="process-management">
+                                        <div class="sub-item-text">Process Management - ps (show processes), kill (stop process), top (system monitor), checking if applications are running</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-linux-basics" data-sub="log-analysis">
+                                        <div class="sub-item-text">Log Analysis Basics - tail (view file end), head (view file start), less/more (page through files), basic log file navigation</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-linux-basics" data-sub="permissions-help">
+                                        <div class="sub-item-text">Permissions and Help - chmod basics (file permissions), man (manual pages), --help flag, understanding permission errors</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="linux-basics-progress">0/5</span> completed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">Basic Technical Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-pc-skills">
+                            <div class="skill-info">
+                                <div class="skill-title">Basic PC Skills</div>
+                                <div class="skill-description">Essential computer skills for working effectively in testing environments</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/computer-basics.html" class="resource-link" target="_blank">Computer Basics Guide</a>
+                                    <a href="https://www.softwaretestinghelp.com/basic-computer-skills-for-testers/" class="resource-link" target="_blank">PC Skills for Testers</a>
+                                </div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Master essential computer skills for testing work:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-pc-skills" data-sub="file-management">
+                                        <div class="sub-item-text">File Management - Create folders, organize test files, copy/move files, compress/extract zip files, file naming conventions</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-pc-skills" data-sub="screenshots-recording">
+                                        <div class="sub-item-text">Screenshots & Recording - Take clear screenshots, record screen videos, annotate images, save in appropriate formats</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-pc-skills" data-sub="browser-skills">
+                                        <div class="sub-item-text">Browser Skills - Multiple browser testing, clear cache/cookies, use incognito mode, basic developer tools (F12)</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-pc-skills" data-sub="office-tools">
+                                        <div class="sub-item-text">Office Tools - Basic Excel/Sheets (create tables, sort data), Word/Docs (formatting), email etiquette, calendar management</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-pc-skills" data-sub="remote-tools">
+                                        <div class="sub-item-text">Remote Work Tools - Video conferencing (Zoom, Teams), screen sharing, collaboration tools, VPN basics if needed</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="pc-skills-progress">0/5</span> completed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="skills-section">
+                <h3 class="section-title">Practical Testing Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <input type="checkbox" class="skill-checkbox" data-skill="trainee-bug-tc-execution">
+                            <div class="skill-info">
+                                <div class="skill-title">Bug Management & Test Case Execution</div>
+                                <div class="skill-description">Hands-on skills for finding, reporting bugs and executing test cases systematically</div>
+                                <div class="skill-resources">
+                                    <a href="https://www.guru99.com/defect-management-process.html" class="resource-link" target="_blank">Bug Management Basics</a>
+                                    <a href="https://www.softwaretestinghelp.com/test-case-execution/" class="resource-link" target="_blank">Test Execution Guide</a>
+                                </div>
+                                
+                                <div class="sub-checklist">
+                                    <div class="sub-checklist-title">Learn practical testing and bug management skills:</div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-bug-tc-execution" data-sub="bug-identification">
+                                        <div class="sub-item-text">Bug Identification - Recognize when software behaves unexpectedly, distinguish bugs from features, understand severity levels</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-bug-tc-execution" data-sub="bug-reporting">
+                                        <div class="sub-item-text">Bug Reporting Basics - Write clear bug titles, include steps to reproduce, add expected vs actual results, attach screenshots</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-bug-tc-execution" data-sub="test-execution">
+                                        <div class="sub-item-text">Test Case Execution - Follow test steps systematically, document results (Pass/Fail), note observations, handle test data</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-bug-tc-execution" data-sub="exploratory-basics">
+                                        <div class="sub-item-text">Basic Exploratory Testing - Try different user paths, test edge cases, use boundary values, think like end users</div>
+                                    </div>
+                                    
+                                    <div class="sub-checklist-item">
+                                        <input type="checkbox" class="sub-checkbox" data-parent="trainee-bug-tc-execution" data-sub="testing-tools">
+                                        <div class="sub-item-text">Basic Testing Tools - Use bug tracking tools (Jira basics), test management tools, understand test environments</div>
+                                    </div>
+                                    
+                                    <div class="sub-progress">Progress: <span id="bug-tc-execution-progress">0/5</span> completed</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -947,6 +1332,19 @@
                 const skillId = checkbox.getAttribute('data-skill');
                 checkbox.checked = skillsData[skillId] || false;
             });
+            
+            // Update sub-checkboxes
+            document.querySelectorAll('.sub-checkbox').forEach(subCheckbox => {
+                const parentId = subCheckbox.getAttribute('data-parent');
+                const subId = `${parentId}-${subCheckbox.getAttribute('data-sub')}`;
+                subCheckbox.checked = skillsData[subId] || false;
+            });
+            
+            // Update sub-progress displays
+            document.querySelectorAll('[data-parent]').forEach(subCheckbox => {
+                const parentId = subCheckbox.getAttribute('data-parent');
+                updateSubProgress(parentId);
+            });
         }
         
         // Handle checkbox changes
@@ -954,8 +1352,43 @@
             if (e.target.classList.contains('skill-checkbox')) {
                 const skillId = e.target.getAttribute('data-skill');
                 skillsData[skillId] = e.target.checked;
+                
+                // Handle sub-checkboxes based on main checkbox state
+                const subCheckboxes = document.querySelectorAll(`[data-parent="${skillId}"]`);
+                if (subCheckboxes.length > 0) {
+                    // If checking main skill, check all sub-items
+                    if (e.target.checked) {
+                        subCheckboxes.forEach(subCheckbox => {
+                            subCheckbox.checked = true;
+                            const subId = `${skillId}-${subCheckbox.getAttribute('data-sub')}`;
+                            skillsData[subId] = true;
+                        });
+                    } else {
+                        // If unchecking main skill, uncheck all sub-items
+                        subCheckboxes.forEach(subCheckbox => {
+                            subCheckbox.checked = false;
+                            const subId = `${skillId}-${subCheckbox.getAttribute('data-sub')}`;
+                            skillsData[subId] = false;
+                        });
+                    }
+                    updateSubProgress(skillId);
+                }
+                
                 saveProgress();
                 updateProgressDisplay();
+            }
+            
+            if (e.target.classList.contains('sub-checkbox')) {
+                const parentId = e.target.getAttribute('data-parent');
+                const subId = `${parentId}-${e.target.getAttribute('data-sub')}`;
+                skillsData[subId] = e.target.checked;
+                
+                // Update parent checkbox based on sub-items completion
+                updateParentCheckbox(parentId);
+                
+                saveProgress();
+                updateProgressDisplay();
+                updateSubProgress(parentId);
             }
         });
         
@@ -997,9 +1430,10 @@
                 const level = levels[levelKey];
                 if (level.total > 0) {
                     const percentage = Math.round((level.completed / level.total) * 100);
+                    const isCompleted = percentage === 100;
                     
                     const card = document.createElement('div');
-                    card.className = 'progress-card';
+                    card.className = isCompleted ? 'progress-card completed' : 'progress-card';
                     card.innerHTML = `
                         <h3>${level.name} Level</h3>
                         <div class="progress-bar">
@@ -1068,6 +1502,31 @@
             a.click();
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
+        }
+        
+        // Update parent checkbox based on sub-items
+        function updateParentCheckbox(parentId) {
+            const subCheckboxes = document.querySelectorAll(`[data-parent="${parentId}"]`);
+            const checkedSubs = document.querySelectorAll(`[data-parent="${parentId}"]:checked`);
+            const parentCheckbox = document.querySelector(`[data-skill="${parentId}"]`);
+            
+            if (parentCheckbox) {
+                // Parent is checked if all sub-items are checked
+                const allChecked = subCheckboxes.length > 0 && checkedSubs.length === subCheckboxes.length;
+                parentCheckbox.checked = allChecked;
+                skillsData[parentId] = allChecked;
+            }
+        }
+        
+        // Update sub-progress display
+        function updateSubProgress(parentId) {
+            const subCheckboxes = document.querySelectorAll(`[data-parent="${parentId}"]`);
+            const checkedSubs = document.querySelectorAll(`[data-parent="${parentId}"]:checked`);
+            const progressElement = document.getElementById(`${parentId.replace('trainee-', '')}-progress`);
+            
+            if (progressElement && subCheckboxes.length > 0) {
+                progressElement.textContent = `${checkedSubs.length}/${subCheckboxes.length}`;
+            }
         }
         
         // Initialize the application
